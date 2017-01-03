@@ -1,0 +1,14 @@
+<%= stylesheet_link_tag 'sessions', media: 'print, screen'%>
+<div class="login">
+  <div class="container">
+    <div class="form">
+ 	 	 	<h1>LOOLGIN</h1>
+ 	 	 	<%= form_for(:user, url: sessions_path) do |f| %>
+       	<%= f.text_field :name, :placeholder => "usuario", class: "username" %>
+       	<%= f.password_field :password, :placeholder => "password", class: "passwd" %>
+       	<%= f.submit "Login", class: "btn-submit be-gray" %>
+   	 	 	<p id="notice"><%= notice %></p>
+ 	 	 	<% end %>
+    </div>
+  </div>
+</div>

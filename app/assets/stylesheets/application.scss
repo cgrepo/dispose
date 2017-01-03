@@ -1,0 +1,55 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+@import 'bootstrap-sprockets';
+@import 'bootstrap';
+@import url('https://fonts.googleapis.com/css?family=Droid+Sans');
+
+html, body {
+  background: #fff;
+  font-family: 'Droid Sans', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+table {
+  border-collapse: separate;
+  border-spacing: 0 5px;
+
+}
+
+$tcolor: #414141; $fcolor: #ECF0F1;
+thead th {
+  background-color: $tcolor;
+  color: $fcolor;
+}
+tbody td {
+  background-color: #EEEEEE;
+  font-size: 12px;
+}
+
+tr td:first-child,
+tr th:first-child {
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+}
+
+tr td:last-child,
+tr th:last-child {
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+  background-color: #8a9da7;
+}
