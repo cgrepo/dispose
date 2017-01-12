@@ -1,0 +1,31 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-xs col-md">
+      <div class="table-responsive no-margins">
+        <table class="table table-hover table-striped">
+          <thead>
+            <tr>
+              <th>NOMBRE</th>
+              <th>SERVICIO</th>
+              <th>UNIDAD</th>
+              <th>CANTIDAD</th>
+              <th>COSTO</th>
+              <th>30% ADICIONAL</th>
+              <th>TOTAL</th>
+            </tr>
+          </thead>
+          <tbody>
+          <% @enteros.each do |entero| %>
+            <tr>
+              <td><%= entero.taxpayer %></td>
+              <td><%= entero.service %></td>
+              <td><%= entero.unit %></td>
+              <td><%= entero.quantity %></td>
+            </tr>
+          <% end %>
+        </tbody>
+        </table>
+      </div>
+    </div>
+  </div>  
+</div>

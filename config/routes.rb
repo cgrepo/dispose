@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  resources :enteros do
+      collection do
+          get 'insertServices', to:'enteros#insertServices'
+      end
+  end
+
 # automatically by rails
   #get 'sessions/new'
   #get 'sessions/create'
@@ -9,7 +15,7 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-   root 'welcome#index'
+   root 'enteros#index'
    resources :sessions, only:[:new, :create, :destroy]
    get "/login" => "sessions#new", as: "login"
    delete "/logout" => "sessions#destroy", as: "logout"

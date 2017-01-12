@@ -1,0 +1,1 @@
+json.partial! "enteros/entero", entero: @entero

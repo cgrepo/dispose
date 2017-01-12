@@ -1,0 +1,1 @@
+json.array! @enteros, partial: 'enteros/entero', as: :entero

@@ -1,0 +1,63 @@
+<div class="container">
+  <div class="row">
+    <div class = "col-xs col-md-6">
+      <p id="notice"><%= notice %></p>
+      <p>
+        <strong>NOMBRE:</strong>
+        <%= @entero.taxpayer %>
+      </p>
+      <p>
+        <% factor = 80.04 %>
+        <% case @entero.service %>
+        <% when '1' %>
+        <%   servicio = 'RESIDUOS SOLIDOS COMERCIAL' %>
+        <%   tax = 4*factor %>
+        <% when '2' %>
+        <%   servicio = 'ESCOMBROS DE CONSTRUCCION COMERCIAL' %>
+        <%   tax = 5*factor %>
+        <% when '3' %>
+        <%   servicio = 'RESTOS DE ANIMALES COMERCIAL' %>
+        <%   tax = 1*factor %>
+        <% when '4' %>
+        <%   servicio = 'RAMAS Y DESECHOS DE JARDINERIA COMERCIAL' %>
+        <%   tax = factor %>
+        <% when '5' %>
+        <%   servicio = 'LLANTAS DE VEHICULOS AUTOMORES COMERCIAL' %>
+        <%   tax = factor %>
+        <% when '6' %>
+        <%   servicio = 'LODO ESTABILIZADOS DERIVADO DE PLANTAS DE TRATAMIENTO' %>
+        <%   tax = factor %>
+        <% end %>
+        <% cost = @entero.quantity * tax %>
+        <% adition = cost * 0.3 %>
+        <% tot = cost + adition %>
+        <strong>Service:</strong>
+        <%= servicio %>
+      </p>
+      <p>
+        <strong>UNIDAD:</strong>
+        <%= @entero.unit %>
+      </p>
+      <p>
+        <strong>CANTIDAD:</strong>
+        <%= @entero.quantity %>
+      </p>
+      <p>
+        <strong>COSTO:</strong>
+        <%= cost %>
+      </p>
+      <p>
+        <strong>ADICIONAL:</strong>
+        <%= adition %>
+      </p>
+      <p>
+        <strong>TOTAL:</strong>
+        <%= tot %>
+      </p>
+      <br>
+      <%= link_to 'EDITAR', edit_entero_path(@entero), class:'btn btn-default btn-sm' %> |
+      <%= link_to 'REGRESAR', enteros_path, class:'btn btn-default btn-sm' %>
+
+    </div>
+  </div>
+</div>

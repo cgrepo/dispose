@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  taxpayer: MyString
+  service: MyString
+  unit: MyString
+  quantity: 1
+
+two:
+  taxpayer: MyString
+  service: MyString
+  unit: MyString
+  quantity: 1

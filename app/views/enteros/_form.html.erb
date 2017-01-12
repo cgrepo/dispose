@@ -1,0 +1,72 @@
+<%= form_for(@entero) do |f| %>
+  <% if @entero.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@entero.errors.count, "error") %> prohibited this entero from being saved:</h2>
+
+      <ul>
+      <% @entero.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="container">
+    <div class="row">
+      <div class="col-xs col-md-9">
+        <%= f.label :NOMBRE %><br>
+        <%= f.text_field :taxpayer, class:'form-control' %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs col-md-7">
+        <%= f.label :servicio %><br>
+        <%= f.select :service, 
+        [ 
+          ['DISPOSICION FINAL DE RESIDUOS SOLIDOS COMERCIAL','1'], 
+          ['DISPOSICION FINAL DE ESCOMBROS DE CONSTRUCCION COMERCIAL','2'], 
+          ['DISPOSICION FINAL DE RESTOS DE ANIMALES COMERCIAL','3'], 
+          ['DISPOSICION FINAL DE RAMAS Y DESECHOS DE JARDINERIA COMERCIAL','4'],
+          ['DISPOSICION FINAL DE LLANTAS DE VEHICULOS AUTOMORES COMERCIAL','5'],
+          ['DISPOSICION FINAL DE LODO ESTABILIZADOS DERIVADO DE PLANTAS DE TRATAMIENTO','6']
+        ], {}, {class:'btn btn-default dropdown-toggle services'} %>
+      </div>
+      <div class="col-xs col-md-1"> 
+        <%= f.label :UNIDAD %><br>
+        <%= f.select :unit, [ ['TON.'], ['K.G.'] ], {}, {class:'btn btn-default dropdown-toggle, unit'} %>
+        <%= link_to 'ADD', insertServices_enteros_path, class:'btn btn-default btn-sm plus',remote:true %>
+      </div>
+      <div class="col-xs col-md-1">
+        <%= f.label :CANTIDAD %><br>
+        <%= f.text_field :quantity, class:'form-control cantidad' %>
+        <%= link_to 'DEL', insertServices_enteros_path, class:'btn btn-default btn-sm rem' %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs col-md-7">
+        <div class="table-responsive mytable">
+          <table class="table table-hover table-striped display">
+            <thead>
+              <tr>
+                <td>COSTO</td>
+                <td>ADICIONAL</td>
+                <td>TOTAL</td>
+              </tr>
+            </thead>
+            <tbody>
+              
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="col-xs col-md-1">
+        <br>
+        <%= f.submit 'GENERAR', class:'btn btn-primary btn-sm' %>
+      </div>
+      <div class="col-xs col-md-1">
+        <br>
+        <%= link_to 'REGRESAR', enteros_path, class:'btn btn-default btn-sm' %>
+      </div>    
+    </div>
+</div>
+<% end %>
+
