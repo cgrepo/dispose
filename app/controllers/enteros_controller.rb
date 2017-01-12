@@ -62,10 +62,15 @@ class EnterosController < ApplicationController
   end
 
   def insertServices
-    
     respond_to do |format|
         format.js
       end
+  end
+  
+  def deleteServices
+    respond_to do |format|
+      format.js
+    end
   end
   
   private

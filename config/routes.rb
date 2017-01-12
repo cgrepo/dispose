@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   resources :enteros do
       collection do
           get 'insertServices', to:'enteros#insertServices'
+          get 'deleteServices', to:'enteros#deleteServices'
       end
   end
 
