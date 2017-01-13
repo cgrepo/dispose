@@ -1,6 +1,12 @@
-<h1>Editing Entero</h1>
+<div class="container">
+    <div class="row">
+        <div class="col-xs col-md-12">
+            <h1>Editar Entero</h1>
+        </div>
+    </div>
+</div>
 
 <%= render 'form' %>
 
-<%= link_to 'Show', @entero %> |
-<%= link_to 'Back', enteros_path %>
+<%= link_to 'Mostrar', @entero, class:'btn btn-default btn-sm' %> |
+<%= link_to 'Regresar', enteros_path, class:'btn btn-default btn-sm' %>

@@ -2,32 +2,32 @@ sm = 80.04;
 op = $('.services option:selected').val();
 unit = $('.unit option:selected').val();
 cantidad = $('.cantidad').val();
-
-switch(op)
+if($.isNumeric(cantidad))
 {
-    case '1':
-        tax = 4 * sm;
-    break;
-    
-    case '2':
-        tax = 5 * sm;
-    break;
-    
-    case '3':
-        tax = 3 * sm;
-    break;
-    
-    default:
-        tax = sm;
+    switch(op)
+    {
+        case '1':
+            tax=4*sm;
+            break;
+        case '2':
+            tax=5*sm;
+            break;
+        case '3':
+            tax=3*sm;
+            break;
+        default:
+            tax=sm;
+    }
+    if(unit == 'K.G.')
+        cantidad = cantidad / 1000; 
+
+    payment = tax * cantidad;
+    $('.display').find('tbody:last').append('<tr><td>'+payment+'</td><td>'+payment*0.3+'</td><td>'+(payment+payment*0.3)+'</td></tr>');
+    $('.cantidad').val('');
+    $('.services').val(1);
 }
-if(cantidad == '')
-    alert('PROPORCIONAR UNA CANTIDAD');
 else
 {
-    if(unit == 'K.G.')
-        cantidad = cantidad / 1000;
-    payment = tax * cantidad;
+    alert('proporcionar solo numeros!');
+    $('.cantidad').val('');
 }
-
-$('.display').find('tbody:last').append('<tr><td>'+payment+'</td><td>'+payment*0.3+'</td><td>'+(payment+payment*0.3)+'</td></tr>');
-

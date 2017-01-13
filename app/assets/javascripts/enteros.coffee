@@ -1,6 +1,12 @@
 # need it global
 #tax = 0
 #$(document).on "turbolinks:load", ->
+#    $('#btn').click ->
+#        $.ajax
+#            url:'/enteros/'
+#            type:'POST'
+#            dataType:'script'
+#            data: { service: $('.services option:selected').val(),quantity: $('.cantidad').val(), unit: $('.unit').val() }
 #    op = 1
 #    $('.plus').click ->
 #        $.ajax

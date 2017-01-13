@@ -24,12 +24,14 @@ class EnterosController < ApplicationController
   # POST /enteros
   # POST /enteros.json
   def create
+    byebug
     @entero = Entero.new(entero_params)
 
       respond_to do |format|
         if @entero.save
           format.html { redirect_to @entero, notice: 'Entero was successfully created.' }
           format.json { render :show, status: :created, location: @entero }
+          format.js
         else
           format.html { render :new }
           format.json { render json: @entero.errors, status: :unprocessable_entity }
@@ -62,6 +64,7 @@ class EnterosController < ApplicationController
   end
 
   def insertServices
+    
     respond_to do |format|
         format.js
       end
