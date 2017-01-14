@@ -29,7 +29,7 @@ class EnterosController < ApplicationController
 
       respond_to do |format|
         if @entero.save
-          format.html { redirect_to @entero, notice: 'Entero was successfully created.' }
+          format.html  { redirect_to @entero, notice: 'Entero was successfully created.' }
           format.json { render :show, status: :created, location: @entero }
           format.js
         else

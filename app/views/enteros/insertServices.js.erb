@@ -29,13 +29,9 @@ if($.isNumeric(cantidad))
     $.ajax({
       type: "POST",
       url: "/enteros",
-      data: { entero: { taxpayer: $('#taxpayer').val(), service: op, unit: unit, quantity: cantidad } },
-//      success: function(data){
-//        alert(data.id);
-//        }
-//      error:function(data){
-//        alert('damm');
-//        }
+      data: { entero: { taxpayer: $('#taxpayer').val(), service: op, unit: unit, quantity: $('.cantidad').val() } }
+      ,success: function(data){ alert(data); }
+//    ,error:function(data){ alert('damm'); debugger; }
     });
         
 //        $.ajax({
