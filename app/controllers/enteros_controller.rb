@@ -24,7 +24,7 @@ class EnterosController < ApplicationController
   # POST /enteros
   # POST /enteros.json
   def create
-    byebug
+    #byebug
     @entero = Entero.new(entero_params)
 
       respond_to do |format|

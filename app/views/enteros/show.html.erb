@@ -28,7 +28,7 @@
         <%   servicio = 'LODO ESTABILIZADOS DERIVADO DE PLANTAS DE TRATAMIENTO' %>
         <%   tax = factor %>
         <% end %>
-        <% cost = @entero.quantity * tax %>
+        <% @entero.quantity ? cost = @entero.quantity * tax : cost=0 %>
         <% adition = cost * 0.3 %>
         <% tot = cost + adition %>
         <strong>Service:</strong>
