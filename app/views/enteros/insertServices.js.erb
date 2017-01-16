@@ -1,49 +1,41 @@
-sm = 80.04;
-op = $('.services option:selected').val();
-unit = $('.unit option:selected').val();
-cantidad = $('.cantidad').val();
-if($.isNumeric(cantidad))
-{
-    switch(op)
+//---------------------------------------------
+    sm = 80.04; // salario minimo
+    op = $('.services option:selected').val();
+    unit = $('.unit option:selected').val();
+    cantidad = $('.cantidad').val();
+    var idArray = [];
+//---------------------------------------------
+    if($.isNumeric(cantidad))
     {
-        case '1':
-            tax=4*sm;
-            break;
-        case '2':
-            tax=5*sm;
-            break;
-        case '3':
-            tax=3*sm;
-            break;
-        default:
-            tax=sm;
+        switch(op)
+        {
+            case '1':
+                tax=4*sm;
+                break;
+            case '2':
+                tax=5*sm;
+                break;
+            case '3':
+                tax=3*sm;
+                break;
+            default:
+                tax=sm;
+        }
+        if(unit == 'K.G.')
+            cantidad = cantidad / 1000; 
+        payment = tax * cantidad;
+        $.ajax({
+            type:'POST',
+            url:'/enteros/putService',
+            dataType:'script',
+            data: { entero: { taxpayer: $('#taxpayer').val(), service: op, unit: unit, quantity: $('.cantidad').val() } }
+    //        ,success: function(data){ alert(data); },
+    //        ,error:function(data){ alert(data); debugger; }
+        });
+    
     }
-    if(unit == 'K.G.')
-        cantidad = cantidad / 1000; 
-
-    payment = tax * cantidad;
-    $('.display').find('tbody:last').append('<tr><td>'+payment+'</td><td>'+payment*0.3+'</td><td>'+(payment+payment*0.3)+'</td></tr>');
-//    $('form#new_entero').submit();
-    $.ajax({
-        type:'POST',
-        url:'/enteros/putService',
-        dataType:'script',
-        data: { entero: { taxpayer: $('#taxpayer').val(), service: op, unit: unit, quantity: $('.cantidad').val() } },
-        success: function(data){ alert(data); },
-        error:function(data){ alert(data); debugger; }
-    });
-    $('.cantidad').val('');
-    $('.services').val(1);
-//    $.ajax({
-//      type: "POST",
-//      url: "/enteros",
-//      data: { entero: { taxpayer: $('#taxpayer').val(), service: op, unit: unit, quantity: $('.cantidad').val() } }
-//      ,success: function(data){ alert(data); }
-//    ,error:function(data){ alert('damm'); debugger; }
-//    });
-}
-else
-{
-    alert('proporcionar solo numeros!');
-    $('.cantidad').val('');
-}
+    else
+    {
+        alert('proporcionar solo numeros!');
+        $('.cantidad').val('');
+    }

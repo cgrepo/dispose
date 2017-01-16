@@ -77,11 +77,9 @@ class EnterosController < ApplicationController
   
   def putService
     @entero = Entero.new(entero_params)
-    #byebug
     respond_to do |format|
       if @entero.save
-        #byebug
-        format.js {}
+        format.js 
       end
     end
   end
