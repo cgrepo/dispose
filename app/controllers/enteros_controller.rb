@@ -64,7 +64,6 @@ class EnterosController < ApplicationController
   end
 
   def insertServices
-    
     respond_to do |format|
         format.js
       end
@@ -76,6 +75,16 @@ class EnterosController < ApplicationController
     end
   end
   
+  def putService
+    @entero = Entero.new(entero_params)
+    #byebug
+    respond_to do |format|
+      if @entero.save
+        #byebug
+        format.js {}
+      end
+    end
+  end
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_entero

@@ -3,6 +3,7 @@ Rails.application.routes.draw do
       collection do
           get 'insertServices', to:'enteros#insertServices'
           get 'deleteServices', to:'enteros#deleteServices'
+          post 'putService', to:'enteros#putService'
       end
   end
 
