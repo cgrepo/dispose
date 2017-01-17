@@ -24,9 +24,7 @@ class EnterosController < ApplicationController
   # POST /enteros
   # POST /enteros.json
   def create
-    #byebug
     @entero = Entero.new(entero_params)
-
       respond_to do |format|
         if @entero.save
           format.html  { redirect_to @entero, notice: 'Entero was successfully created.' }
@@ -69,21 +67,34 @@ class EnterosController < ApplicationController
       end
   end
   
+  def putService
+    @entero = Entero.new(entero_params)
+    respond_to do |format|
+      if @entero.save
+        format.json { render :show, status: :created, location: @entero }
+        format.js 
+      end
+    end
+  end
+  
   def deleteServices
     respond_to do |format|
       format.js
     end
   end
   
-  def putService
-    @entero = Entero.new(entero_params)
+  def popService
+    set_entero
+    @entero.destroy
+    #byebug
     respond_to do |format|
-      if @entero.save
-        format.js 
-      end
+      format.json { head :no_content, notice: 'Entero was successfully destroyed.'}
+      format.js
     end
   end
+  
   private
+  
     # Use callbacks to share common setup or constraints between actions.
     def set_entero
       @entero = Entero.find(params[:id])

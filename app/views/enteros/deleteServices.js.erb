@@ -1,1 +1,19 @@
-$('.display tr:last').remove();
+var id = $('.display').find('tr:last td:first').text();
+
+$.ajax({
+    type:'DELETE',
+    url:'/enteros/popService',
+    dataType:'json',
+    data: { id: id }
+    ,success: function(data)
+    { 
+        $('.display tr:last').remove();
+        if ($('.tbone').children('tr').length == 0)
+            $('.btnrm').hide()
+    }
+    ,error:function(data)
+    { 
+        console.log(data); debugger; 
+    }
+});
+

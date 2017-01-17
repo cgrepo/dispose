@@ -1,3 +1,11 @@
+$(document).on "turbolinks:load", ->
+    $('.btnrm').hide()
+#    $('.btnplus').click ->  
+#        $('.btnrm').show()
+    
+#    $('.btnrm').click ->
+#        alert $('.tbone').children('tr').length
+    
 # need it global
 #tax = 0
 #$(document).on "turbolinks:load", ->

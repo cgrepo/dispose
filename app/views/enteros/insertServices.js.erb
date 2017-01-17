@@ -1,9 +1,9 @@
 //---------------------------------------------
-    sm = 80.04; // salario minimo
+    sm = 80.04;
     op = $('.services option:selected').val();
     unit = $('.unit option:selected').val();
     cantidad = $('.cantidad').val();
-    var idArray = [];
+    
 //---------------------------------------------
     if($.isNumeric(cantidad))
     {
@@ -27,12 +27,21 @@
         $.ajax({
             type:'POST',
             url:'/enteros/putService',
-            dataType:'script',
+            dataType:'json',
+            cache: false,
             data: { entero: { taxpayer: $('#taxpayer').val(), service: op, unit: unit, quantity: $('.cantidad').val() } }
-    //        ,success: function(data){ alert(data); },
-    //        ,error:function(data){ alert(data); debugger; }
+            ,success: function(data)
+            {
+                $('.display').find('tbody:last').append('<tr><td>'+data.id+'</td><td>'+payment+'</td><td>'+payment*0.3+'</td><td>'+(payment+payment*0.3)+'</td></tr>');
+                $('.cantidad').val('');
+                $('.services').val(1);
+                $('.btnrm').show();
+            }
+            ,error:function(data)
+            { 
+                console.log(data); debugger; 
+            }
         });
-    
     }
     else
     {
