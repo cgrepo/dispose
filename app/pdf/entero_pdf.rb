@@ -1,8 +1,9 @@
 class EnteroPdf < Prawn::Document
     def initialize(enteros)
         super()
+        @enteros = enteros
         #stroke_axis(step_length:20)
-        #stroke_axis(at:[1,230], height:140, width:600, color:'FF00', step_length:50)
+        #stroke_axis(at:[1,609], height:140, width:600, color:'FF00', step_length:50)
         Prawn::Font::AFM.hide_m17n_warning = true
 #------SET UP FONTS------------------------------------------------------------------------------------------------------------------------
 		font_families["Verdana"] = { normal:{file:"#{Rails.root.to_s}/app/assets/fonts/Verdana.ttf", font:"Verdana"} }
@@ -11,7 +12,6 @@ class EnteroPdf < Prawn::Document
 		imglogo = "#{Rails.root.to_s}/app/assets/images/logo.png"
 		t = Time.now
         mes = getMes(t)
-        name = 'SERVICIOS SANITARIOS DE DISPOSICION DE MATERIALES TOXICOS EL CHARLY BROWN'
 #------IMAGES------------------------------------------------------------------------------------------------------------------------------
         image imgshield, at: [26,710], fit:[80,80]
         image imgshield, at: [26,335], fit:[80,80]
@@ -49,13 +49,19 @@ class EnteroPdf < Prawn::Document
     	], at:[120,265], width:280, height:50
     	
     	formatted_text_box [
-    	    { :text => "NOMBRE: #{name}                   ", size:10, style:[:bold], font:"Calibri", color:'000000' }, 
-    	    { :text => 'FOLIO No. 00003', size:12, style:[:bold], font:"Calibri", color:'000000' }
-    	], at:[26,624], width:520, height:30
+    	    { :text => "NOMBRE: #{@enteros.first.taxpayer}", size:10, style:[:bold], font:"Calibri", color:'000000' }
+    	], at:[26,624], width:435, height:30
     	formatted_text_box [
-    	    { :text => "NOMBRE: #{name}                   ", size:10, style:[:bold], font:"Calibri", color:'000000' }, 
-    	    { :text => 'FOLIO No. 00003', size:12, style:[:bold], font:"Calibri", color:'000000' }
+    	    { :text => "FOLIO No. 00003", size:12, style:[:bold], font:"Calibri", color:'000FFF' }
+    	], at:[460,624], width:100, height:20
+    
+    	formatted_text_box [
+    	    { :text => "NOMBRE: #{@enteros.first.taxpayer}", size:10, style:[:bold], font:"Calibri", color:'000000' }, 
     	], at:[26,249], width:520, height:30
+    	formatted_text_box [
+    	    { :text => "FOLIO No. 00003", size:12, style:[:bold], font:"Calibri", color:'000FFF' }
+    	], at:[460,249], width:100, height:20
+
 #------TABLA-------------------------------------------------------------------------------------------------------------------------------
     	formatted_text_box [
     	    { :text => 'No.', size:9, style:[:bold], font:"Calibri", color:'000000' }

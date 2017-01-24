@@ -61,7 +61,7 @@
       </div>
       <div class="col-xs col-md-1">
         <br>
-        <%= link_to 'GENERAR', get_pdf_enteros_path(@enteros, format:"pdf"),class:'btn btn-default btn-sm' %>
+        <%= link_to 'GENERAR', buildpdf_enteros_path(format:'js'), class:'btn btn-default btn-sm', remote:true %>
       </div>
       <div class="col-xs col-md-1">
         <br>

@@ -1,0 +1,12 @@
+var $rows = $('.tbone').find('tr');
+var enteros = [];
+
+$rows.each(
+  function(i,el){
+    var $col = $(this).find('td');
+    enteros.push($col.eq(0).text());
+  });
+console.log(enteros);
+var url = '/enteros/showEntero?totals=' + enteros;
+console.log(url);
+window.location.href=url;

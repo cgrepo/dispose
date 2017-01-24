@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
   resources :enteros do
       collection do
-          get 'get_pdf', to:'enteros#getEnteroPdf'
+          get 'buildpdf', to:'enteros#buildPdf'
+          get 'showEntero', to:'enteros#showEntero'
           get 'insertServices', to:'enteros#insertServices'
           get 'deleteServices', to:'enteros#deleteServices'
           post 'putService', to:'enteros#putService'

@@ -93,10 +93,18 @@ class EnterosController < ApplicationController
     end
   end
   
-  def getEnteroPdf
-    @enteros = Entero.all
+  def buildPdf
+    #byebug
     respond_to do |format|
-      format.pdf do
+      format.js
+    end
+  end
+  
+  def showEntero
+    @enteros = Entero.where id: params[:totals]
+    
+    respond_to do |format|
+      format.html do
         pdf = EnteroPdf.new(@enteros)
         send_data pdf.render,
           filename: "entero_relleno.pdf",
@@ -106,6 +114,7 @@ class EnterosController < ApplicationController
     end
   end
   private
+  
   
     # Use callbacks to share common setup or constraints between actions.
     def set_entero
