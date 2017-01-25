@@ -1,5 +1,26 @@
 $(document).on "turbolinks:load", ->
     $('.btnrm').hide()
+    $('.unit option[value="3"]').attr('disabled','disabled')
+    $('.services').on 'change', ->
+        if parseInt($('.services option:selected').val()) > 3
+            $('.unit option[value="1"]').attr('disabled','disabled')
+            $('.unit option[value="2"]').attr('disabled','disabled')
+            $('.unit').val(3)
+        else
+            $('.unit option[value="3"]').attr('disabled','disabled')
+            $('.unit option[value="1"]').removeAttr('disabled')
+            $('.unit option[value="2"]').removeAttr('disabled')
+            $('.unit').val(1)
+    
+            
+# $('.unit option[value="1"]').prop("disabled", true)
+#             $('.unit option[value="2"]').prop("disabled", true)
+#             $('.unit option[value="3"]').prop("enabled", true)  MESN740106HBSZLC05
+            
+# $('.unit option[value="1"]').prop("enabled", true)
+#             $('.unit option[value="2"]').prop("enabled", true)
+#             $('.unit option[value="3"]').prop("disabled", true)
+        
 #    $('.btnplus').click ->  
 #        $('.btnrm').show()
     

@@ -32,7 +32,7 @@
       </div>
       <div class="col-xs col-md-1"> 
         <%= f.label :UNIDAD %><br>
-        <%= f.select :unit, [ ['TON.'], ['K.G.'] ], {}, {class:'btn btn-default dropdown-toggle, unit'} %>
+        <%= f.select :unit, [ ['TON.','1'], ['K.G.','2'], ['M3','3']], {}, {class:'btn btn-default dropdown-toggle unit'} %>
         <%= link_to 'ADD', insertServices_enteros_path, class:'btn btn-default btn-sm btnplus', remote:true %>
       </div>
       <div class="col-xs col-md-1">

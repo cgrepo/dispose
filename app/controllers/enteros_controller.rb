@@ -101,7 +101,7 @@ class EnterosController < ApplicationController
   end
   
   def showEntero
-    @enteros = Entero.where id: params[:totals]
+    @enteros = Entero.where id: params[:totals].split(',')
     
     respond_to do |format|
       format.html do

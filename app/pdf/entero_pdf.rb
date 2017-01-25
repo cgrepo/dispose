@@ -1,68 +1,49 @@
 class EnteroPdf < Prawn::Document
+    
     def initialize(enteros)
         super()
         @enteros = enteros
+        @SM = 80.04
+        setUp
+        setQuantities(@enteros,@SM)
+        
+    end
+#-------PRIVATE METHODS---------------------------------------------------------------------------------------------------------------------
+    private
+    
+    def setUp
+		font_families["Verdana"] = { normal:{file:"#{Rails.root.to_s}/app/assets/fonts/Verdana.ttf", font:"Verdana"} }
+		font_families["Calibri"] = { normal:{file:"#{Rails.root.to_s}/app/assets/fonts/Calibri.ttf", font:"Calibri"} }
         #stroke_axis(step_length:20)
         #stroke_axis(at:[1,609], height:140, width:600, color:'FF00', step_length:50)
         Prawn::Font::AFM.hide_m17n_warning = true
-#------SET UP FONTS------------------------------------------------------------------------------------------------------------------------
-		font_families["Verdana"] = { normal:{file:"#{Rails.root.to_s}/app/assets/fonts/Verdana.ttf", font:"Verdana"} }
-		font_families["Calibri"] = { normal:{file:"#{Rails.root.to_s}/app/assets/fonts/Calibri.ttf", font:"Calibri"} }
-		imgshield = "#{Rails.root.to_s}/app/assets/images/shield.png"
-		imglogo = "#{Rails.root.to_s}/app/assets/images/logo.png"
-		t = Time.now
-        mes = getMes(t)
-#------IMAGES------------------------------------------------------------------------------------------------------------------------------
-        image imgshield, at: [26,710], fit:[80,80]
-        image imgshield, at: [26,335], fit:[80,80]
-		image imglogo, at: [400,700], fit:[150,150]
-		image imglogo, at: [400,335], fit:[150,150]
-#------SET UP HEADERS----------------------------------------------------------------------------------------------------------------------
-    	formatted_text_box [
-    	    { :text => "H. XII AYUNTAMIENTO DE LOS CABOS DIRECCÍON MUNICIPAL DE INGRESOS", size:13, style:[:bold], font:"Verdana", 
-    	      color:'000000'}, 
-    	], at:[120,710], width:320, height:200
-    	formatted_text_box [
-    	    { :text => "H. XII AYUNTAMIENTO DE LOS CABOS DIRECCÍON MUNICIPAL DE INGRESOS", size:13, style:[:bold], font:"Verdana", 
-    	      color:'000000'}, 
-    	], at:[120,335], width:320, height:200
-    	
-    	formatted_text_box [
-    	    { :text => "ENTERO DE PAGO", size:11, style:[:normal], font:"Calibri", color:'000000' }, 
-    	], at:[210,679], width:150, height:20
-    	formatted_text_box [
-    	    { :text => "ENTERO DE PAGO", size:11, style:[:normal], font:"Calibri", color:'000000' }, 
-    	], at:[210,304], width:150, height:20
-    	
-    	formatted_text_box [
-    	    { :text => "CONCESIONARIO DE SERVICIOS", size:11, style:[:normal], font:"Calibri", color:'000000' }, 
-    	], at:[180,670], width:200, height:20
-    	formatted_text_box [
-    	    { :text => "CONCESIONARIO DE SERVICIOS", size:11, style:[:normal], font:"Calibri", color:'000000' }, 
-    	], at:[180,295], width:200, height:20
-    	
-    	formatted_text_box [
-    	    { :text => "RELLENO SANITARIO CANDELARIA CABO SAN LUCAS", size:12, style:[:bold], font:"Calibri", color:'000000' }, 
-    	], at:[120,660], width:280, height:50
-    	formatted_text_box [
-    	    { :text => "RELLENO SANITARIO CANDELARIA CABO SAN LUCAS", size:12, style:[:bold], font:"Calibri", color:'000000' }, 
-    	], at:[120,265], width:280, height:50
-    	
-    	formatted_text_box [
-    	    { :text => "NOMBRE: #{@enteros.first.taxpayer}", size:10, style:[:bold], font:"Calibri", color:'000000' }
-    	], at:[26,624], width:435, height:30
-    	formatted_text_box [
-    	    { :text => "FOLIO No. 00003", size:12, style:[:bold], font:"Calibri", color:'000FFF' }
-    	], at:[460,624], width:100, height:20
-    
-    	formatted_text_box [
-    	    { :text => "NOMBRE: #{@enteros.first.taxpayer}", size:10, style:[:bold], font:"Calibri", color:'000000' }, 
-    	], at:[26,249], width:520, height:30
-    	formatted_text_box [
-    	    { :text => "FOLIO No. 00003", size:12, style:[:bold], font:"Calibri", color:'000FFF' }
-    	], at:[460,249], width:100, height:20
+        setHeaders
+        setFoot
+        setShapes
+        setTable
+    end
+    def setQuantities(enteros,sm)
 
-#------TABLA-------------------------------------------------------------------------------------------------------------------------------
+        enteros.each do |entero|
+
+            case entero.service
+                when '1'
+                    setOne(entero.quantity,entero.unit,(sm*4))
+                when '2'
+                    setTwo(entero.quantity,entero.unit,(sm*5))
+                when '3'
+                    setTree(entero.quantity,entero.unit,(sm*3))
+                when '4'
+                    setFour(entero.quantity,entero.unit,(sm))
+                when '5'
+                    setFive(entero.quantity,entero.unit,(sm))
+                when '6'
+                    setSix(entero.quantity,entero.unit,(sm))
+            end
+        end
+    end
+    def setTable
+    #------TABLA-------------------------------------------------------------------------------------------------------------------------------
     	formatted_text_box [
     	    { :text => 'No.', size:9, style:[:bold], font:"Calibri", color:'000000' }
     	], at:[26,604], width:15, height:10
@@ -111,7 +92,7 @@ class EnteroPdf < Prawn::Document
     	formatted_text_box [
     	    { :text => 'TOTAL', size:9, style:[:bold], font:"Calibri", color:'000000' }
     	], at:[506,229], width:30, height:10
-#------1-----------------------------------------------------------------------------------------------------------------------------------
+    #------1-----------------------------------------------------------------------------------------------------------------------------------
     	formatted_text_box [
     	    { :text => '1', size:9, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[26,590], width:10, height:10
@@ -132,7 +113,7 @@ class EnteroPdf < Prawn::Document
     	formatted_text_box [
     	    { :text => 'TONELADA', size:9, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[317,215], width:45, height:10
-#------2-----------------------------------------------------------------------------------------------------------------------------------
+    #------2-----------------------------------------------------------------------------------------------------------------------------------
     	formatted_text_box [
     	    { :text => '2', size:9, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[26,575], width:10, height:10
@@ -153,7 +134,7 @@ class EnteroPdf < Prawn::Document
     	formatted_text_box [
     	    { :text => 'TONELADA', size:9, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[317,200], width:45, height:10
-#------3-----------------------------------------------------------------------------------------------------------------------------------
+    #------3-----------------------------------------------------------------------------------------------------------------------------------
     	formatted_text_box [
     	    { :text => '3', size:9, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[26,560], width:10, height:10
@@ -174,7 +155,7 @@ class EnteroPdf < Prawn::Document
     	formatted_text_box [
     	    { :text => 'TONELADA', size:9, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[317,185], width:45, height:10
-#------4-----------------------------------------------------------------------------------------------------------------------------------
+    #------4-----------------------------------------------------------------------------------------------------------------------------------
     	formatted_text_box [
     	    { :text => '4', size:9, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[26,545], width:10, height:10
@@ -202,7 +183,7 @@ class EnteroPdf < Prawn::Document
     	formatted_text_box [
     	    { :text => '3', size:6, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[340,170], width:10, height:10
-#------5-----------------------------------------------------------------------------------------------------------------------------------
+    #------5-----------------------------------------------------------------------------------------------------------------------------------
     	formatted_text_box [
     	    { :text => '5', size:9, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[26,530], width:10, height:10
@@ -230,7 +211,7 @@ class EnteroPdf < Prawn::Document
     	formatted_text_box [
     	    { :text => '3', size:6, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[340,154], width:10, height:10
-#------6-----------------------------------------------------------------------------------------------------------------------------------
+    #------6-----------------------------------------------------------------------------------------------------------------------------------
     	formatted_text_box [
     	    { :text => '6', size:9, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[26,505], width:10, height:10
@@ -258,221 +239,61 @@ class EnteroPdf < Prawn::Document
     	formatted_text_box [
     	    { :text => '3', size:6, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[340,130], width:10, height:10
-#------CANTIDADES--------------------------------------------------------------------------------------------------------------------------
+    end
+    def setHeaders
         formatted_text_box [
-    	    { :text => '#########', size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[363,590], width:43, height:10
+    	    { :text => "H. XII AYUNTAMIENTO DE LOS CABOS DIRECCÍON MUNICIPAL DE INGRESOS", size:13, style:[:bold], font:"Verdana", 
+    	      color:'000000'}, 
+    	], at:[120,710], width:320, height:200
     	formatted_text_box [
-    	    { :text => '#########', size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[363,215], width:43, height:10
+    	    { :text => "H. XII AYUNTAMIENTO DE LOS CABOS DIRECCÍON MUNICIPAL DE INGRESOS", size:13, style:[:bold], font:"Verdana", 
+    	      color:'000000'}, 
+    	], at:[120,335], width:320, height:200
     	
     	formatted_text_box [
-    	    { :text => '#########', size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[363,575], width:43, height:10
+    	    { :text => "ENTERO DE PAGO", size:11, style:[:normal], font:"Calibri", color:'000000' }, 
+    	], at:[210,679], width:150, height:20
     	formatted_text_box [
-    	    { :text => '#########', size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[363,200], width:43, height:10
+    	    { :text => "ENTERO DE PAGO", size:11, style:[:normal], font:"Calibri", color:'000000' }, 
+    	], at:[210,304], width:150, height:20
     	
     	formatted_text_box [
-    	    { :text => '#########', size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[363,560], width:43, height:10
+    	    { :text => "CONCESIONARIO DE SERVICIOS", size:11, style:[:normal], font:"Calibri", color:'000000' }, 
+    	], at:[180,670], width:200, height:20
     	formatted_text_box [
-    	    { :text => '#########', size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[363,185], width:43, height:10
+    	    { :text => "CONCESIONARIO DE SERVICIOS", size:11, style:[:normal], font:"Calibri", color:'000000' }, 
+    	], at:[180,295], width:200, height:20
     	
     	formatted_text_box [
-    	    { :text => '#########', size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[363,545], width:43, height:10
+    	    { :text => "RELLENO SANITARIO CANDELARIA CABO SAN LUCAS", size:12, style:[:bold], font:"Calibri", color:'000000' }, 
+    	], at:[120,660], width:280, height:50
     	formatted_text_box [
-    	    { :text => '#########', size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[363,170], width:43, height:10
+    	    { :text => "RELLENO SANITARIO CANDELARIA CABO SAN LUCAS", size:12, style:[:bold], font:"Calibri", color:'000000' }, 
+    	], at:[120,265], width:280, height:50
     	
     	formatted_text_box [
-    	    { :text => '#########', size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[363,530], width:43, height:10
+    	    { :text => "NOMBRE: #{@enteros.first.taxpayer}", size:10, style:[:bold], font:"Calibri", color:'000000' }
+    	], at:[26,624], width:435, height:30
     	formatted_text_box [
-    	    { :text => '#########', size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[363,154], width:43, height:10
-    	
-    	formatted_text_box [
-    	    { :text => '#########', size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[363,510], width:43, height:10
-    	formatted_text_box [
-    	    { :text => '#########', size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[363,130], width:43, height:10
-#------------------------------------------------------------------------------------------------------------------------------------------
-    	formatted_text_box [
-    	    { :text => '#########', size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[408,590], width:43, height:10
-    	formatted_text_box [
-    	    { :text => '#########', size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[408,215], width:43, height:10
-    	
-    	formatted_text_box [
-    	    { :text => '#########', size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[408,575], width:43, height:10
-    	formatted_text_box [
-    	    { :text => '#########', size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[408,200], width:43, height:10
-    	
-    	formatted_text_box [
-    	    { :text => '#########', size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[408,560], width:43, height:10
-    	formatted_text_box [
-    	    { :text => '#########', size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[408,185], width:43, height:10
-    	
-    	formatted_text_box [
-    	    { :text => '#########', size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[408,545], width:43, height:10
-    	formatted_text_box [
-    	    { :text => '#########', size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[408,170], width:43, height:10
-    	
-    	formatted_text_box [
-    	    { :text => '#########', size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[408,530], width:43, height:10
-    	formatted_text_box [
-    	    { :text => '#########', size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[408,154], width:43, height:10
-    	
-    	formatted_text_box [
-    	    { :text => '#########', size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[408,510], width:43, height:10
-    	formatted_text_box [
-    	    { :text => '#########', size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[408,130], width:43, height:10
-#------------------------------------------------------------------------------------------------------------------------------------------
-    	formatted_text_box [
-    	    { :text => '#########', size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[453,590], width:43, height:10
-    	formatted_text_box [
-    	    { :text => '#########', size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[453,215], width:43, height:10
-    	
-    	formatted_text_box [
-    	    { :text => '#########', size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[453,575], width:43, height:10
-    	formatted_text_box [
-    	    { :text => '#########', size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[453,200], width:43, height:10
-    	
-    	formatted_text_box [
-    	    { :text => '#########', size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[453,560], width:43, height:10
-    	formatted_text_box [
-    	    { :text => '#########', size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[453,185], width:43, height:10
-    	
-    	formatted_text_box [
-    	    { :text => '#########', size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[453,545], width:43, height:10
-    	formatted_text_box [
-    	    { :text => '#########', size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[453,170], width:43, height:10
-    	
-    	formatted_text_box [
-    	    { :text => '#########', size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[453,530], width:43, height:10
-    	formatted_text_box [
-    	    { :text => '#########', size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[453,154], width:43, height:10
-    	
-    	formatted_text_box [
-    	    { :text => '#########', size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[453,510], width:43, height:10
-    	formatted_text_box [
-    	    { :text => '#########', size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[453,130], width:43, height:10
-#------------------------------------------------------------------------------------------------------------------------------------------
-    	formatted_text_box [
-    	    { :text => '#########', size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[498,590], width:43, height:10
-    	formatted_text_box [
-    	    { :text => '#########', size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[498,215], width:43, height:10
-    	
-    	formatted_text_box [
-    	    { :text => '#########', size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[498,575], width:43, height:10
-    	formatted_text_box [
-    	    { :text => '#########', size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[498,200], width:43, height:10
-    	
-    	formatted_text_box [
-    	    { :text => '#########', size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[498,560], width:43, height:10
-    	formatted_text_box [
-    	    { :text => '#########', size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[498,185], width:43, height:10
-    	
-    	formatted_text_box [
-    	    { :text => '#########', size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[498,545], width:43, height:10
-    	formatted_text_box [
-    	    { :text => '#########', size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[498,170], width:43, height:10
-    	
-    	formatted_text_box [
-    	    { :text => '#########', size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[498,530], width:43, height:10
-    	formatted_text_box [
-    	    { :text => '#########', size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[498,154], width:43, height:10
-    	
-    	formatted_text_box [
-    	    { :text => '#########', size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[498,510], width:43, height:10
-    	formatted_text_box [
-    	    { :text => '#########', size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[498,130], width:43, height:10
-#------FOOT--------------------------------------------------------------------------------------------------------------------------------
-        formatted_text_box [
-            { :text => 'FUNDAMENTACION: ART. 119 DE LA LEY DE HACIENDA PARA EL MUNICIPIO DE LOS CABOS, INCISO C) DISPOCISION FINAL EN LOS RELLENOS MUNICIPALES.',
-            size:8.5, style:[:italic], font:"Calibri", color:'000000' }
-        ], at:[21,480], width:600, height:10
-        formatted_text_box [
-            { :text => 'FUNDAMENTACION: ART. 119 DE LA LEY DE HACIENDA PARA EL MUNICIPIO DE LOS CABOS, INCISO C) DISPOCISION FINAL EN LOS RELLENOS MUNICIPALES.',
-            size:8.5, style:[:italic], font:"Calibri", color:'000000' }
-        ], at:[21,105], width:600, height:10
-        
-        formatted_text_box [
-            { :text => 'CLAVE:',
-            size:8.5, style:[:italic], font:"Calibri", color:'000000' }
-        ], at:[25,462], width:600, height:10
-        formatted_text_box [
-            { :text => 'CLAVE:',
-            size:8.5, style:[:italic], font:"Calibri", color:'000000' }
-        ], at:[25,87], width:600, height:10
+    	    { :text => "FOLIO No. 00003", size:12, style:[:bold], font:"Calibri", color:'000FFF' }
+    	], at:[460,624], width:100, height:20
     
-        formatted_text_box [
-            { :text => "CABO SAN LUCAS, B.C.S. A #{t.day} DE #{mes} DEL #{t.year}",
-            size:10, style:[:bold], font:"Calibri", color:'000000' }
-        ], at:[318,465], width:220, height:10
-        formatted_text_box [
-            { :text => "CABO SAN LUCAS, B.C.S. A #{t.day} DE #{mes} DEL #{t.year}",
-            size:10, style:[:bold], font:"Calibri", color:'000000' }
-        ], at:[318,90], width:220, height:10
-        
-        formatted_text_box [
-            { :text => 'NOMBRE Y FIRMA',
-            size:13, style:[:bold], font:"Calibri", color:'000000' }
-        ], at:[105,405], width:100, height:15
-        formatted_text_box [
-            { :text => 'NOMBRE Y FIRMA',
-            size:13, style:[:bold], font:"Calibri", color:'000000' }
-        ], at:[105,30], width:100, height:15
-        
-        formatted_text_box [
-            { :text => 'SELLO               ORIGINAL',
-            size:12, style:[:bold], font:"Calibri", color:'000000' }
-        ], at:[400,385], width:200, height:15
-        formatted_text_box [
-            { :text => 'SELLO               ORIGINAL',
-            size:12, style:[:bold], font:"Calibri", color:'000000' }
-        ], at:[400,10], width:200, height:15
-#------SHAPES------------------------------------------------------------------------------------------------------------------------------
-    	stroke_color '000000'
+    	formatted_text_box [
+    	    { :text => "NOMBRE: #{@enteros.first.taxpayer}", size:10, style:[:bold], font:"Calibri", color:'000000' }, 
+    	], at:[26,249], width:520, height:30
+    	formatted_text_box [
+    	    { :text => "FOLIO No. 00003", size:12, style:[:bold], font:"Calibri", color:'000FFF' }
+    	], at:[460,249], width:100, height:20
+    end
+    
+    def setShapes
+        imgshield = "#{Rails.root.to_s}/app/assets/images/shield.png"
+		imglogo = "#{Rails.root.to_s}/app/assets/images/logo.png"
+        image imgshield, at: [26,710], fit:[80,80]
+        image imgshield, at: [26,335], fit:[80,80]
+		image imglogo, at: [400,700], fit:[150,150]
+		image imglogo, at: [400,335], fit:[150,150]
+		stroke_color '000000'
     	
     	stroke do
     	    self.line_width = 0.5
@@ -513,10 +334,241 @@ class EnteroPdf < Prawn::Document
     	end
         dash([1, 2, 3, 4, 5, 6, 7, 8])
         stroke_horizontal_line -30, 590, :at => 350
-    	
     end
-#-------PRIVATE METHODS---------------------------------------------------------------------------------------------------------------------
-    private
+    
+    def setFoot
+        @t = Time.now
+        mes = getMes(@t)
+        formatted_text_box [
+            { :text => 'FUNDAMENTACION: ART. 119 DE LA LEY DE HACIENDA PARA EL MUNICIPIO DE LOS CABOS, INCISO C) DISPOCISION FINAL EN LOS RELLENOS MUNICIPALES.',
+            size:8.5, style:[:italic], font:"Calibri", color:'000000' }
+        ], at:[21,480], width:600, height:10
+        formatted_text_box [
+            { :text => 'FUNDAMENTACION: ART. 119 DE LA LEY DE HACIENDA PARA EL MUNICIPIO DE LOS CABOS, INCISO C) DISPOCISION FINAL EN LOS RELLENOS MUNICIPALES.',
+            size:8.5, style:[:italic], font:"Calibri", color:'000000' }
+        ], at:[21,105], width:600, height:10
+        
+        formatted_text_box [
+            { :text => 'CLAVE:',
+            size:8.5, style:[:italic], font:"Calibri", color:'000000' }
+        ], at:[25,462], width:600, height:10
+        formatted_text_box [
+            { :text => 'CLAVE:',
+            size:8.5, style:[:italic], font:"Calibri", color:'000000' }
+        ], at:[25,87], width:600, height:10
+    
+        formatted_text_box [
+            { :text => "CABO SAN LUCAS, B.C.S. A #{@t.day} DE #{mes} DEL #{@t.year}",
+            size:10, style:[:bold], font:"Calibri", color:'000000' }
+        ], at:[318,465], width:220, height:10
+        formatted_text_box [
+            { :text => "CABO SAN LUCAS, B.C.S. A #{@t.day} DE #{mes} DEL #{@t.year}",
+            size:10, style:[:bold], font:"Calibri", color:'000000' }
+        ], at:[318,90], width:220, height:10
+        
+        formatted_text_box [
+            { :text => 'NOMBRE Y FIRMA',
+            size:13, style:[:bold], font:"Calibri", color:'000000' }
+        ], at:[105,405], width:100, height:15
+        formatted_text_box [
+            { :text => 'NOMBRE Y FIRMA',
+            size:13, style:[:bold], font:"Calibri", color:'000000' }
+        ], at:[105,30], width:100, height:15
+        
+        formatted_text_box [
+            { :text => 'SELLO               ORIGINAL',
+            size:12, style:[:bold], font:"Calibri", color:'000000' }
+        ], at:[400,385], width:200, height:15
+        formatted_text_box [
+            { :text => 'SELLO               ORIGINAL',
+            size:12, style:[:bold], font:"Calibri", color:'000000' }
+        ], at:[400,10], width:200, height:15
+    end
+    
+    def setOne(quantity,unit,tax)
+        quantity = quantity / 1000 if unit == 'K.G.'
+        cost = quantity*tax
+        percent = cost*0.3
+        
+        formatted_text_box [
+    	    { :text => "#{quantity}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	], at:[363,590], width:43, height:10
+    	formatted_text_box [
+    	    { :text => "#{quantity}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	], at:[363,215], width:43, height:10
+       	formatted_text_box [
+    	    { :text => "#{cost}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	], at:[408,590], width:43, height:10
+    	formatted_text_box [
+    	    { :text => "#{cost}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	], at:[408,215], width:43, height:10 
+    	formatted_text_box [
+    	    { :text => "#{percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	], at:[453,590], width:43, height:10
+    	formatted_text_box [
+    	    { :text => "#{percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	], at:[453,215], width:43, height:10
+    	formatted_text_box [
+    	    { :text => "#{cost+percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	], at:[498,590], width:43, height:10
+    	formatted_text_box [
+    	    { :text => "#{cost+percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	], at:[498,215], width:43, height:10
+    end
+
+    def setTwo(quantity,unit,tax)
+        byebug
+        if unit == 'K.G.'
+            quantity = quantity * 0.0001
+        end
+        cost = quantity*tax
+        percent = cost*0.3
+        
+        formatted_text_box [
+    	    { :text => "#{quantity}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	], at:[363,575], width:43, height:10
+    	formatted_text_box [
+    	    { :text => "#{quantity}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	], at:[363,200], width:43, height:10
+    	 formatted_text_box [
+    	    { :text => "#{cost}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	], at:[408,575], width:43, height:10
+    	formatted_text_box [
+    	    { :text => "#{cost}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	], at:[408,200], width:43, height:10
+    	formatted_text_box [
+    	    { :text => "#{percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	], at:[453,575], width:43, height:10
+    	formatted_text_box [
+    	    { :text => "#{percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	], at:[453,200], width:43, height:10
+    	formatted_text_box [
+    	    { :text => "#{cost+percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	], at:[498,575], width:43, height:10
+    	formatted_text_box [
+    	    { :text => "#{cost+percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	], at:[498,200], width:43, height:10
+    end
+    def setTree(quantity,unit,tax)
+        quantity = quantity / 1000 if unit == 'K.G.'
+        cost = quantity*tax
+        percent = cost*0.3
+        
+        formatted_text_box [
+    	    { :text => "#{quantity}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	], at:[363,560], width:43, height:10
+    	formatted_text_box [
+    	    { :text => "#{quantity}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	], at:[363,185], width:43, height:10
+    	formatted_text_box [
+    	    { :text => "#{cost}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	], at:[408,560], width:43, height:10
+    	formatted_text_box [
+    	    { :text => "#{cost}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	], at:[408,185], width:43, height:10
+    	formatted_text_box [
+    	    { :text => "#{percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	], at:[453,560], width:43, height:10
+    	formatted_text_box [
+    	    { :text => "#{percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	], at:[453,185], width:43, height:10
+    	formatted_text_box [
+    	    { :text => "#{cost+percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	], at:[498,560], width:43, height:10
+    	formatted_text_box [
+    	    { :text => "#{cost+percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	], at:[498,185], width:43, height:10
+    end
+    def setFour(quantity,unit,tax)
+        quantity = quantity / 1000 if unit == 'K.G.'
+        cost = quantity*tax
+        percent = cost*0.3
+        
+        formatted_text_box [
+    	    { :text => "#{quantity}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	], at:[363,545], width:43, height:10
+    	formatted_text_box [
+    	    { :text => "#{quantity}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	], at:[363,170], width:43, height:10
+    	formatted_text_box [
+    	    { :text => "#{cost}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	], at:[408,545], width:43, height:10
+    	formatted_text_box [
+    	    { :text => "#{cost}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	], at:[408,170], width:43, height:10
+    	formatted_text_box [
+    	    { :text => "#{percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	], at:[453,545], width:43, height:10
+    	formatted_text_box [
+    	    { :text => "#{percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	], at:[453,170], width:43, height:10
+    	formatted_text_box [
+    	    { :text => "#{cost+percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	], at:[498,545], width:43, height:10
+    	formatted_text_box [
+    	    { :text => "#{cost+percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	], at:[498,170], width:43, height:10
+    end
+    def setFive(quantity,unit,tax)
+        quantity = quantity / 1000 if unit == 'K.G.'
+        cost = quantity*tax
+        percent = cost*0.3
+        
+        formatted_text_box [
+    	    { :text => "#{quantity}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	], at:[363,530], width:43, height:10
+    	formatted_text_box [
+    	    { :text => "#{quantity}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	], at:[363,154], width:43, height:10
+    	formatted_text_box [
+    	    { :text => "#{cost}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	], at:[408,530], width:43, height:10
+    	formatted_text_box [
+    	    { :text => "#{cost}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	], at:[408,154], width:43, height:10
+    	formatted_text_box [
+    	    { :text => "#{percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	], at:[453,530], width:43, height:10
+    	formatted_text_box [
+    	    { :text => "#{percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	], at:[453,154], width:43, height:10
+    	formatted_text_box [
+    	    { :text => "#{cost+percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	], at:[498,530], width:43, height:10
+    	formatted_text_box [
+    	    { :text => "#{cost+percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	], at:[498,154], width:43, height:10
+    end
+    def setSix(quantity,unit,tax)
+        quantity = quantity / 1000 if unit == 'K.G.'
+        cost = quantity*tax
+        percent = cost*0.3
+        
+        formatted_text_box [
+    	    { :text => "#{quantity}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	], at:[363,505], width:43, height:10
+    	formatted_text_box [
+    	    { :text => "#{quantity}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	], at:[363,130], width:43, height:10
+    	formatted_text_box [
+    	    { :text => "#{cost}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	], at:[408,505], width:43, height:10
+    	formatted_text_box [
+    	    { :text => "#{cost}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	], at:[408,130], width:43, height:10
+    	formatted_text_box [
+    	    { :text => "#{percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	], at:[453,505], width:43, height:10
+    	formatted_text_box [
+    	    { :text => "#{percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	], at:[453,130], width:43, height:10
+    	formatted_text_box [
+    	    { :text => "#{cost+percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	], at:[498,505], width:43, height:10
+    	formatted_text_box [
+    	    { :text => "#{cost+percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	], at:[498,130], width:43, height:10
+    end
     def getMes(t)
         case t.month
             when 1

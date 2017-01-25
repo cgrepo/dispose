@@ -34,7 +34,7 @@
             {
                 $('.display').find('tbody:last').append('<tr><td>'+data.id+'</td><td>'+payment+'</td><td>'+payment*0.3+'</td><td>'+(payment+payment*0.3)+'</td></tr>');
                 $('.cantidad').val('');
-                $('.services').val(1);
+                $('.services').val(1); //establish the value
                 $('.btnrm').show();
             }
             ,error:function(data)
