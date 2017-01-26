@@ -42,7 +42,18 @@ class EnteroPdf < Prawn::Document
         end
     end
     def setOne(quantity,unit,tax)
-        quantity = quantity / 1000 if unit == 'K.G.'
+        
+        if unit == 'K.G.'
+            quantity = quantity * 0.001
+            unit = 'KILOGRAMO'
+        end
+        formatted_text_box [
+    	    { :text => "#{unit}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	], at:[317,590], width:45, height:10
+    	formatted_text_box [
+    	    { :text => "#{unit}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	], at:[317,215], width:45, height:10
+        
         cost = quantity*tax
         percent = cost*0.3
         
@@ -73,8 +84,18 @@ class EnteroPdf < Prawn::Document
     end
     def setTwo(quantity,unit,tax)
         if unit == 'K.G.'
-            quantity = quantity * 0.0001
+            med = 8
+            quantity = quantity * 0.001
+            unit = 'KILOGRAMO'
+        else
+            med = 9
         end
+    	formatted_text_box [
+    	    { :text => "#{unit}", size:med, style:[:normal], font:"Calibri", color:'000000' }
+    	], at:[317,575], width:45, height:10
+    	formatted_text_box [
+    	    { :text => "#{unit}", size:med, style:[:normal], font:"Calibri", color:'000000' }
+    	], at:[317,200], width:45, height:10        
         cost = quantity*tax
         percent = cost*0.3
         
@@ -288,13 +309,6 @@ class EnteroPdf < Prawn::Document
     	formatted_text_box [
     	    { :text => 'DISPOSICION FINAL DE RESIDUOS SOLIDOS COMERCIAL', size:9, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[48,215], width:309, height:10
-    	
-    	formatted_text_box [
-    	    { :text => 'TONELADA', size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[317,590], width:45, height:10
-    	formatted_text_box [
-    	    { :text => 'TONELADA', size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[317,215], width:45, height:10
     #------2-----------------------------------------------------------------------------------------------------------------------------------
     	formatted_text_box [
     	    { :text => '2', size:9, style:[:normal], font:"Calibri", color:'000000' }
@@ -309,13 +323,6 @@ class EnteroPdf < Prawn::Document
     	formatted_text_box [
     	    { :text => 'DISPOSICION FINAL DE ESCOMBROS DE CONSTRUCCION COMERCIAL', size:9, style:[:normal], font:"Calibri", color:'000000' } 
     	], at:[48,200], width:320, height:10
-    	
-    	formatted_text_box [
-    	    { :text => 'TONELADA', size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[317,575], width:45, height:10
-    	formatted_text_box [
-    	    { :text => 'TONELADA', size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[317,200], width:45, height:10
     #------3-----------------------------------------------------------------------------------------------------------------------------------
     	formatted_text_box [
     	    { :text => '3', size:9, style:[:normal], font:"Calibri", color:'000000' }

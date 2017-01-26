@@ -1,9 +1,9 @@
 //---------------------------------------------
-    sm = 80.04;
-    op = $('.services option:selected').val();
-    unit = $('.unit option:selected').val();
-    cantidad = $('.cantidad').val();
-    
+    var sm = 80.04;
+    var op = $('.services option:selected').val();
+    var unit = $('.unit option:selected').text();
+    var cantidad = $('.cantidad').val();
+
 //---------------------------------------------
     if($.isNumeric(cantidad))
     {
@@ -21,9 +21,19 @@
             default:
                 tax=sm;
         }
-        if(unit == 'K.G.')
-            cantidad = cantidad / 1000; 
-        payment = tax * cantidad;
+        if(unit == 'K.G.'){
+            cantidad = cantidad * 0.001; 
+            console.log(cantidad);
+        }
+        //var payment = parseFloat(Math.round((tax*cantidad)*100)/100).toFixed(2);
+        var payment = Math.round(tax*cantidad);
+        console.log(payment);
+        //var percent = parseFloat(Math.round((payment*0.3)*100)/100).toFixed(2);
+        var percent = Math.round(payment*0.3);
+        console.log(percent);
+        //var total = parseFloat(Math.round((payment+percent)*100)/100).toFixed(2);
+        var total = percent + payment;
+        console.log(total);
         $.ajax({
             type:'POST',
             url:'/enteros/putService',
@@ -32,7 +42,7 @@
             data: { entero: { taxpayer: $('#taxpayer').val(), service: op, unit: unit, quantity: $('.cantidad').val() } }
             ,success: function(data)
             {
-                $('.display').find('tbody:last').append('<tr><td>'+data.id+'</td><td>'+payment+'</td><td>'+payment*0.3+'</td><td>'+(payment+payment*0.3)+'</td></tr>');
+                $('.display').find('tbody:last').append('<tr><td>'+data.id+'</td><td>'+payment+'</td><td>'+percent+'</td><td>'+total+'</td></tr>');
                 $('.unit option[value="1"]').removeAttr('disabled')//enable TON
                 $('.unit option[value="2"]').removeAttr('disabled')//enable KG
                 $('.unit option[value="3"]').attr('disabled','disabled')//disable M3
