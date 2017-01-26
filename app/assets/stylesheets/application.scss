@@ -29,6 +29,7 @@ table {
 }
 
 $tcolor: #414141; $fcolor: #ECF0F1;
+
 thead th {
   background-color: $tcolor;
   color: $fcolor;
@@ -51,4 +52,44 @@ tr th:last-child {
 }
 .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
   background-color: #8a9da7;
+}
+.be-gray{
+  background-color: #414141;
+  color: #ECF0F1;
+}
+.be-soft_gray{
+ background-color: #ECECEC;
+ color: black;
+}
+.be-soft_gray2{
+  background-color: #cbcbd2;
+  color: #ECF0F1; 
+}
+.be-round_gray{
+  background-color: #8a9da7;
+  color: #ECF0F1; 
+}
+.be-round_soft_gray{
+  background-color: #c0c1c2;
+  color: #ECF0F1;  
+}
+.be-round_ligth_gray{
+  background-color: #efefef;
+  color: black; 
+}
+.be-soft_red{
+  background-color: #dc4c4c;
+  color: #ECF0F1; 
+}
+.be-soft_purple{
+  background-color: #7f60a5;
+  color: #ECF0F1;
+}
+.be-soft_blue{
+  background-color: #0e678e;
+  color: #ECF0F1;    
+}
+.be-ligth_blue{
+  background-color: #0078ad;
+  color: #ECF0F1;  
 }

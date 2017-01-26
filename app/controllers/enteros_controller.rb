@@ -86,7 +86,6 @@ class EnterosController < ApplicationController
   def popService
     set_entero
     @entero.destroy
-    #byebug
     respond_to do |format|
       format.json { head :no_content, notice: 'Entero was successfully destroyed.'}
       format.js
@@ -94,7 +93,6 @@ class EnterosController < ApplicationController
   end
   
   def buildPdf
-    #byebug
     respond_to do |format|
       format.js
     end
@@ -113,9 +111,8 @@ class EnterosController < ApplicationController
         end
     end
   end
+  
   private
-  
-  
     # Use callbacks to share common setup or constraints between actions.
     def set_entero
       @entero = Entero.find(params[:id])
