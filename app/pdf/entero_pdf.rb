@@ -44,16 +44,22 @@ class EnteroPdf < Prawn::Document
     def setOne(quantity,unit,tax)
         
         if unit == 'K.G.'
-            quantity = quantity * 0.001
+            #quantity = quantity * 0.001
             unit = 'KILOGRAMO'
+            med = 8
+        else
+            med = 9
+            unit = 'TONELADA'
         end
+        
         formatted_text_box [
-    	    { :text => "#{unit}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	    { :text => "#{unit}", size:med, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[317,590], width:45, height:10
     	formatted_text_box [
-    	    { :text => "#{unit}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	    { :text => "#{unit}", size:med, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[317,215], width:45, height:10
         
+        quantity = quantity * 0.001 if unit == 'KILOGRAMO'
         cost = quantity*tax
         percent = cost*0.3
         
@@ -81,31 +87,36 @@ class EnteroPdf < Prawn::Document
     	formatted_text_box [
     	    { :text => "#{cost+percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[498,215], width:43, height:10
+    	
     end
+    
     def setTwo(quantity,unit,tax)
+        
         if unit == 'K.G.'
             med = 8
-            quantity = quantity * 0.001
             unit = 'KILOGRAMO'
         else
             med = 9
+            unit = 'TONELADA'
         end
     	formatted_text_box [
     	    { :text => "#{unit}", size:med, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[317,575], width:45, height:10
     	formatted_text_box [
     	    { :text => "#{unit}", size:med, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[317,200], width:45, height:10        
-        cost = quantity*tax
-        percent = cost*0.3
-        
+    	], at:[317,200], width:45, height:10
         formatted_text_box [
     	    { :text => "#{quantity}", size:9, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[363,575], width:43, height:10
     	formatted_text_box [
     	    { :text => "#{quantity}", size:9, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[363,200], width:43, height:10
-    	 formatted_text_box [
+    	
+    	quantity = quantity * 0.001 if unit == 'KILOGRAMO'
+        cost = quantity*tax
+        percent = cost*0.3
+        
+    	formatted_text_box [
     	    { :text => "#{cost}", size:9, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[408,575], width:43, height:10
     	formatted_text_box [
