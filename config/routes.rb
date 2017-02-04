@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :concessionaries
   resources :enteros do
       collection do
           get 'buildpdf', to:'enteros#buildPdf'
