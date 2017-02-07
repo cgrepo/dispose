@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
-
+# You can have the root of your site routed with "root"
+  
+  root 'enteros#index'
+  resources :sessions, only:[:new, :create, :destroy]
+  get "/login" => "sessions#new", as: "login"
+  delete "/logout" => "sessions#destroy", as: "logout"
+  
   resources :enteros do
       collection do
           get 'buildpdf', to:'enteros#buildPdf'
@@ -11,6 +17,7 @@ Rails.application.routes.draw do
           
       end
   end
+  resources :concessionaries
 
 # automatically by rails
   #get 'sessions/new'
@@ -20,11 +27,4 @@ Rails.application.routes.draw do
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
-
-  # You can have the root of your site routed with "root"
-   root 'enteros#index'
-   resources :sessions, only:[:new, :create, :destroy]
-   get "/login" => "sessions#new", as: "login"
-   delete "/logout" => "sessions#destroy", as: "logout"
-  
 end

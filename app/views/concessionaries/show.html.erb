@@ -1,0 +1,23 @@
+<div class='container'>
+  <div class='row'>
+    <div class='col-xs col-md-8'>
+      <p>
+        <strong>Nombre:</strong>
+        <%= @concessionary.name %>
+      </p>
+      
+      <p>
+        <strong>Telefono:</strong>
+        <%= @concessionary.telephone %>
+      </p>
+    </div>
+  </div>
+  <br>
+  <br>
+  <div class='row'>
+    <div class='col-xs col-md-12 be-soft_gray'>
+      <%= link_to 'Editar', edit_concessionary_path(@concessionary), class:'btn btn-default btn-sm' %> |
+      <%= link_to 'Regresar', concessionaries_path, class:'btn btn-default btn-sm' %>
+    </div>
+  </div>
+</div>

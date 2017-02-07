@@ -1,0 +1,32 @@
+<%= form_for(@concessionary) do |f| %>
+  <% if @concessionary.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@concessionary.errors.count, "error") %> prohibited this concessionary from being saved:</h2>
+
+      <ul>
+      <% @concessionary.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class='container'>
+    <div class='row'>
+      <div class="col-xs-4 col-md-4">
+        <%= f.label :name %><br>
+        <%= f.text_field :name, class:'form-control' %>
+      </div>
+      <div class="col-xs-2 col-md-2">
+        <%= f.label :telephone %><br>
+        <%= f.text_field :telephone, class:'form-control' %>
+      </div>
+    </div>
+    <div class='row'>
+      <div class="col-xs-2 col-md-2">
+        <br>
+        <br>
+        <%= f.submit %>
+      </div>
+    </div>
+  </div>
+<% end %>
