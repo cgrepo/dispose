@@ -4,7 +4,7 @@ class CreateDebts < ActiveRecord::Migration
       t.date :start
       t.date :end
       t.float :amount
-      t.references :concessionary, index: true, foreign_key: true
+      t.references :vehicle, index: true, foreign_key: true
 
       t.timestamps null: false
     end

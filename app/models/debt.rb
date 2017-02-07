@@ -1,3 +1,3 @@
 class Debt < ActiveRecord::Base
-  belongs_to :concessionary
+  belongs_to :vehicle
 end

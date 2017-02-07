@@ -1,1 +1,0 @@
-json.partial! "concessionaries/concessionary", concessionary: @concessionary

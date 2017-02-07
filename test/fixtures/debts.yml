@@ -4,10 +4,10 @@ one:
   start: 2017-02-07
   end: 2017-02-07
   amount: 1.5
-  concessionary_id: 
+  vehicle_id: 
 
 two:
   start: 2017-02-07
   end: 2017-02-07
   amount: 1.5
-  concessionary_id: 
+  vehicle_id: 

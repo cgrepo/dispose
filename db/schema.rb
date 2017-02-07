@@ -11,11 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170207054534) do
+ActiveRecord::Schema.define(version: 20170207173727) do
 
   create_table "concessionaries", force: :cascade do |t|
     t.string   "name"
-    t.string   "phone"
+    t.string   "telephone"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -24,12 +24,12 @@ ActiveRecord::Schema.define(version: 20170207054534) do
     t.date     "start"
     t.date     "end"
     t.float    "amount"
-    t.integer  "concessionary_id"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+    t.integer  "vehicle_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  add_index "debts", ["concessionary_id"], name: "index_debts_on_concessionary_id"
+  add_index "debts", ["vehicle_id"], name: "index_debts_on_vehicle_id"
 
   create_table "enteros", force: :cascade do |t|
     t.string   "taxpayer"
@@ -52,11 +52,11 @@ ActiveRecord::Schema.define(version: 20170207054534) do
 
   create_table "vehicles", force: :cascade do |t|
     t.string   "plate"
-    t.integer  "Concessionary_id"
+    t.integer  "concessionary_id"
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
   end
 
-  add_index "vehicles", ["Concessionary_id"], name: "index_vehicles_on_Concessionary_id"
+  add_index "vehicles", ["concessionary_id"], name: "index_vehicles_on_concessionary_id"
 
 end
