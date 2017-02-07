@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170207004353) do
+ActiveRecord::Schema.define(version: 20170207054534) do
 
   create_table "concessionaries", force: :cascade do |t|
     t.string   "name"
@@ -21,8 +21,9 @@ ActiveRecord::Schema.define(version: 20170207004353) do
   end
 
   create_table "debts", force: :cascade do |t|
-    t.string   "range"
-    t.boolean  "payed"
+    t.date     "start"
+    t.date     "end"
+    t.float    "amount"
     t.integer  "concessionary_id"
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false

@@ -4,7 +4,9 @@ class ConcessionariesController < ApplicationController
   # GET /concessionaries
   # GET /concessionaries.json
   def index
-    @concessionaries = Concessionary.all
+    @concessionaries = Concessionary.all.joins(:vehicles)
+    @vehicles = Vehicle.all.joins(:Concessionary)
+    @debts = Debt.all.joins(:Concessionary)
   end
 
   # GET /concessionaries/1

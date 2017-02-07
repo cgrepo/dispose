@@ -1,4 +1,4 @@
 class Concessionary < ActiveRecord::Base
-    has_many :Vehicle
-    has_many :Debt
+    has_many :vehicles
+    has_many :debts
 end
