@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  range: MyString
+  payed: false
+  concessionary_id: 
+
+two:
+  range: MyString
+  payed: false
+  concessionary_id: 

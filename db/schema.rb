@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170204193453) do
+ActiveRecord::Schema.define(version: 20170207004353) do
 
   create_table "concessionaries", force: :cascade do |t|
     t.string   "name"
@@ -19,6 +19,16 @@ ActiveRecord::Schema.define(version: 20170204193453) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "debts", force: :cascade do |t|
+    t.string   "range"
+    t.boolean  "payed"
+    t.integer  "concessionary_id"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  add_index "debts", ["concessionary_id"], name: "index_debts_on_concessionary_id"
 
   create_table "enteros", force: :cascade do |t|
     t.string   "taxpayer"
@@ -41,8 +51,11 @@ ActiveRecord::Schema.define(version: 20170204193453) do
 
   create_table "vehicles", force: :cascade do |t|
     t.string   "plate"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "Concessionary_id"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
   end
+
+  add_index "vehicles", ["Concessionary_id"], name: "index_vehicles_on_Concessionary_id"
 
 end
