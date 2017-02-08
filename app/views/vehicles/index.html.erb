@@ -1,0 +1,41 @@
+<div class='container'>
+  <div class='row'>
+    <div class='col-xs col-md-12 be-soft_gray'>
+      <h1>Listado de Vehicles de Concesionarios</h1>      
+    </div>
+  </div>
+  <div class='row'>
+    <div class='col-xs col-md-6'>
+      <div class="table-responsive no-margins">
+        <table class="table table-hover table-striped">
+          <thead>
+            <tr>
+              <th>Concesionario</th>
+              <th>Placa</th>
+              <th colspan="3"></th>
+            </tr>
+          </thead>
+        
+          <tbody>
+            <% @vehicles.each do |vehicle| %>
+              <tr>
+                <td><%= vehicle.concessionary.name %></td>
+                <td><%= vehicle.plate %></td>
+                <td><%= link_to 'Mostrar', vehicle %></td>
+                <td><%= link_to 'Editar', edit_vehicle_path(vehicle) %></td>
+                <td><%= link_to 'Borrar', vehicle, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class='row'>
+    <div class='col-xs col-md-12 be-soft_gray'>
+      <%= link_to 'Nuevo Vehiculos', new_vehicle_path, class:'btn btn-default btn-lg' %>      
+    </div>
+  </div>
+</div
+<br>
+

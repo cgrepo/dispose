@@ -18,7 +18,8 @@ Rails.application.routes.draw do
       end
   end
   resources :concessionaries
-
+  resources :vehicles
+  
 # automatically by rails
   #get 'sessions/new'
   #get 'sessions/create'
