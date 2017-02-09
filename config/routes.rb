@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'debts/new'
+
 # You can have the root of your site routed with "root"
   
   root 'enteros#index'
@@ -17,8 +19,12 @@ Rails.application.routes.draw do
           
       end
   end
+  
   resources :concessionaries
-  resources :vehicles
+  
+  resources :vehicles do
+      resources :debts, only: [:create, :destroy]
+  end
   
 # automatically by rails
   #get 'sessions/new'

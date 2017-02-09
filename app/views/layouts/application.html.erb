@@ -16,6 +16,7 @@
               usuario [ <%= current_user.name.upcase %> ]
             </span>
             <span class="pull-right">
+              <%= link_to "", root_path, class:'btn btn-default btn-sm glyphicon glyphicon-home be-round_soft_gray' %>
               <%= link_to "CONCESIONARIOS", concessionaries_path, class:'btn btn-sm be-round_soft_gray' %>
               <%= link_to "VEHICULOS", vehicles_path, class:'btn btn-sm be-round_soft_gray' %>
              	<%= link_to "Logout", logout_path, method: :delete, class:'btn btn-sm btn-danger' %> 

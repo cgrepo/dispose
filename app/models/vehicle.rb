@@ -1,4 +1,4 @@
 class Vehicle < ActiveRecord::Base
   belongs_to :concessionary
-  has_one :debt
+  has_many :debts
 end

@@ -1,9 +1,21 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Plate:</strong>
-  <%= @vehicle.plate %>
-</p>
-
-<%= link_to 'Edit', edit_vehicle_path(@vehicle) %> |
-<%= link_to 'Back', vehicles_path %>
+<div class='container'>
+  <div class='row'>
+    <div class='col-xs col-md-6'>
+      <%= content_tag(:p, content_tag(:strong, "Concesionario: #{@vehicle.concessionary.name}"  )) %>
+      <%= content_tag(:p, content_tag(:strong, 'Placa')) %>
+      <%= @vehicle.plate %>
+    </div>
+  </div>
+  <div class='row'>
+    <div class='col-xs col-md-12'>
+      <br>
+      <%= render @vehicle.debts  %>
+    </div>
+  </div>
+  <div class='row'>
+    <div class='col-xs col-md-12 be-soft_gray'>
+      <%= link_to 'Editar', edit_vehicle_path(@vehicle), class:'btn btn-default btn-lg' %> |
+      <%= link_to 'Regresar', vehicles_path, class:'btn btn-default btn-lg' %>
+    </div>
+  </div>
+</div>
