@@ -4,7 +4,7 @@ class ConcessionariesController < ApplicationController
   # GET /concessionaries
   # GET /concessionaries.json
   def index
-    @concessionaries = Concessionary.all
+    @concessionaries = Concessionary.all.order(:name).paginate(page: params[:page], per_page:20)
   end
 
   # GET /concessionaries/1

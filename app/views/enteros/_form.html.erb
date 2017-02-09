@@ -12,9 +12,9 @@
   <% end %>
   <div class="container be-round_ligth_gray">
     <div class="row">
-      <div class="col-xs col-md-10">
+      <div class="col-xs-6 col-md-6">
         <%= f.label :NOMBRE %><br>
-        <%= f.text_field :taxpayer, class:'form-control', id:'taxpayer' %>
+        <%= f.select :taxpayer, Concessionary.all.order(:name).pluck(:name),{}, {class:'btn btn-default dropdown-toggle', id:'taxpayer'} %>
       </div>
     </div>
     <div class="row">

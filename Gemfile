@@ -15,6 +15,8 @@ source 'https://rubygems.org'
  gem 'responders'
  gem 'jquery-ui-rails'
  gem 'prawn'
+ gem 'rails-i18n'
+ gem 'web-console', '~> 2.0'
 #groups
   group :development, :test do
     # Call 'byebug' anywhere in the code to stop execution and get a debugger console
