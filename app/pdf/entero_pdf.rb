@@ -3,6 +3,7 @@ class EnteroPdf < Prawn::Document
         super()
         @enteros = enteros
         @SM = 80.04
+        @folio = Time.now.strftime("%d%m%Y-%j-#{Concessionary.find_by(name:@enteros.first.taxpayer).id}")
         setUp
         setQuantities(@enteros,@SM)
     end
@@ -476,15 +477,15 @@ class EnteroPdf < Prawn::Document
     	    { :text => "NOMBRE: #{@enteros.first.taxpayer}", size:10, style:[:bold], font:"Calibri", color:'000000' }
     	], at:[26,624], width:435, height:30
     	formatted_text_box [
-    	    { :text => "FOLIO No. 00003", size:12, style:[:bold], font:"Calibri", color:'000FFF' }
-    	], at:[460,624], width:100, height:20
+    	    { :text => "FOLIO No.#{@folio}", size:12, style:[:bold], font:"Calibri", color:'000FFF' }
+    	], at:[400,624], width:200, height:200
     
     	formatted_text_box [
     	    { :text => "NOMBRE: #{@enteros.first.taxpayer}", size:10, style:[:bold], font:"Calibri", color:'000000' }, 
     	], at:[26,249], width:520, height:30
     	formatted_text_box [
-    	    { :text => "FOLIO No. 00003", size:12, style:[:bold], font:"Calibri", color:'000FFF' }
-    	], at:[460,249], width:100, height:20
+    	    { :text => "FOLIO No.#{@folio}", size:12, style:[:bold], font:"Calibri", color:'000FFF' }
+    	], at:[400,249], width:200, height:200
     end
 #------SHAPES-----------------------------------------------------------------------------------------------------------------------------
     def setShapes
@@ -505,8 +506,8 @@ class EnteroPdf < Prawn::Document
     	    rectangle [320,450], 200,60    #1
     	    rectangle [320,75], 200,60    #2
     	    
-    	    horizontal_line 67,460, at:613 #1
-    	    horizontal_line 67,460, at:238 #2
+    	    horizontal_line 67,400, at:613 #1
+    	    horizontal_line 67,400, at:238 #2
     	    horizontal_line 23,553, at:595 #1
     	    horizontal_line 23,553, at:220 #2
     	    horizontal_line 23,553, at:580 #1
