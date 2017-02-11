@@ -6,6 +6,9 @@ class EnteroPdf < Prawn::Document
         @folio = Time.now.strftime("%d%m%Y-%j-#{Concessionary.find_by(name:@enteros.first.taxpayer).id}")
         setUp
         setQuantities(@enteros,@SM)
+        @quantity = 0
+        @cost = 0
+        @percent = 0
     end
 #------PRIVATE METHODS--------------------------------------------------------------------------------------------------------------------
     private
@@ -23,29 +26,27 @@ class EnteroPdf < Prawn::Document
     end
 #------QUANTITYES-------------------------------------------------------------------------------------------------------------------------
     def setQuantities(enteros,sm)
-
         enteros.each do |entero|
 
             case entero.service
                 when '1'
-                    setOne(entero.quantity,entero.unit,(sm*4))
+                    setOne(entero,(sm*4))
                 when '2'
-                    setTwo(entero.quantity,entero.unit,(sm*5))
+                    setTwo(entero,(sm*5))
                 when '3'
-                    setTree(entero.quantity,entero.unit,(sm*3))
+                    setTree(entero,(sm*3))
                 when '4'
-                    setFour(entero.quantity,entero.unit,(sm))
+                    setFour(entero,sm)
                 when '5'
-                    setFive(entero.quantity,entero.unit,(sm))
+                    setFive(entero,sm)
                 when '6'
-                    setSix(entero.quantity,entero.unit,(sm))
+                    setSix(entero,sm)
             end
         end
     end
-    def setOne(quantity,unit,tax)
-        
-        if unit == 'K.G.'
-            #quantity = quantity * 0.001
+    
+    def setOne(entero,tax)
+        if entero.unit == 'K.G.'
             unit = 'KILOGRAMO'
             med = 8
         else
@@ -60,40 +61,36 @@ class EnteroPdf < Prawn::Document
     	    { :text => "#{unit}", size:med, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[317,215], width:45, height:10
         
-        quantity = quantity * 0.001 if unit == 'KILOGRAMO'
-        cost = quantity*tax
-        percent = cost*0.3
+        calculator(entero.quantity,tax,unit)
         
         formatted_text_box [
-    	    { :text => "#{quantity}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	    { :text => "#{entero.quantity}", size:9, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[363,590], width:43, height:10
     	formatted_text_box [
-    	    { :text => "#{quantity}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	    { :text => "#{entero.quantity}", size:9, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[363,215], width:43, height:10
        	formatted_text_box [
-    	    { :text => "#{cost}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	    { :text => "#{(@cost*100).round / 100}", size:9, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[408,590], width:43, height:10
     	formatted_text_box [
-    	    { :text => "#{cost}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	    { :text => "#{@cost}", size:9, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[408,215], width:43, height:10 
     	formatted_text_box [
-    	    { :text => "#{percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	    { :text => "#{@percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[453,590], width:43, height:10
     	formatted_text_box [
-    	    { :text => "#{percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	    { :text => "#{@percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[453,215], width:43, height:10
     	formatted_text_box [
-    	    { :text => "#{cost+percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	    { :text => "#{@cost+@percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[498,590], width:43, height:10
     	formatted_text_box [
-    	    { :text => "#{cost+percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	    { :text => "#{@cost+@percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[498,215], width:43, height:10
-    	
     end
     
-    def setTwo(quantity,unit,tax)
-        
-        if unit == 'K.G.'
+    def setTwo(entero,tax)
+        if entero.unit == 'K.G.'
             med = 8
             unit = 'KILOGRAMO'
         else
@@ -106,154 +103,144 @@ class EnteroPdf < Prawn::Document
     	formatted_text_box [
     	    { :text => "#{unit}", size:med, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[317,200], width:45, height:10
+    	
+    	calculator(entero.quantity,tax,unit)
+    	
         formatted_text_box [
-    	    { :text => "#{quantity}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	    { :text => "#{entero.quantity}", size:9, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[363,575], width:43, height:10
     	formatted_text_box [
-    	    { :text => "#{quantity}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	    { :text => "#{entero.quantity}", size:9, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[363,200], width:43, height:10
-    	
-    	quantity = quantity * 0.001 if unit == 'KILOGRAMO'
-        cost = quantity*tax
-        percent = cost*0.3
-        
     	formatted_text_box [
-    	    { :text => "#{cost}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	    { :text => "#{@cost}", size:9, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[408,575], width:43, height:10
     	formatted_text_box [
-    	    { :text => "#{cost}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	    { :text => "#{@cost}", size:9, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[408,200], width:43, height:10
     	formatted_text_box [
-    	    { :text => "#{percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	    { :text => "#{@percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[453,575], width:43, height:10
     	formatted_text_box [
-    	    { :text => "#{percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	    { :text => "#{@percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[453,200], width:43, height:10
     	formatted_text_box [
-    	    { :text => "#{cost+percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	    { :text => "#{@cost+@percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[498,575], width:43, height:10
     	formatted_text_box [
-    	    { :text => "#{cost+percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	    { :text => "#{@cost+@percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[498,200], width:43, height:10
     end
-    def setTree(quantity,unit,tax)
-        quantity = quantity / 1000 if unit == 'K.G.'
-        cost = quantity*tax
-        percent = cost*0.3
+    def setTree(entero,tax)
+        calculator(entero.quantity,tax,entero.unit)
         
         formatted_text_box [
-    	    { :text => "#{quantity}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	    { :text => "#{entero.quantity}", size:9, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[363,560], width:43, height:10
     	formatted_text_box [
-    	    { :text => "#{quantity}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	    { :text => "#{entero.quantity}", size:9, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[363,185], width:43, height:10
     	formatted_text_box [
-    	    { :text => "#{cost}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	    { :text => "#{@cost}", size:9, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[408,560], width:43, height:10
     	formatted_text_box [
-    	    { :text => "#{cost}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	    { :text => "#{@cost}", size:9, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[408,185], width:43, height:10
     	formatted_text_box [
-    	    { :text => "#{percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	    { :text => "#{@percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[453,560], width:43, height:10
     	formatted_text_box [
-    	    { :text => "#{percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	    { :text => "#{@percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[453,185], width:43, height:10
     	formatted_text_box [
-    	    { :text => "#{cost+percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	    { :text => "#{@cost+@percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[498,560], width:43, height:10
     	formatted_text_box [
-    	    { :text => "#{cost+percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	    { :text => "#{@cost+@percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[498,185], width:43, height:10
     end
-    def setFour(quantity,unit,tax)
-        quantity = quantity / 1000 if unit == 'K.G.'
-        cost = quantity*tax
-        percent = cost*0.3
+    def setFour(entero,tax)
+        calculator(entero.quantity,tax,entero.unit)
         
         formatted_text_box [
-    	    { :text => "#{quantity}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	    { :text => "#{entero.quantity}", size:9, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[363,545], width:43, height:10
     	formatted_text_box [
-    	    { :text => "#{quantity}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	    { :text => "#{entero.quantity}", size:9, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[363,170], width:43, height:10
     	formatted_text_box [
-    	    { :text => "#{cost}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	    { :text => "#{@cost}", size:9, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[408,545], width:43, height:10
     	formatted_text_box [
-    	    { :text => "#{cost}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	    { :text => "#{@cost}", size:9, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[408,170], width:43, height:10
     	formatted_text_box [
-    	    { :text => "#{percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	    { :text => "#{@percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[453,545], width:43, height:10
     	formatted_text_box [
-    	    { :text => "#{percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	    { :text => "#{@percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[453,170], width:43, height:10
     	formatted_text_box [
-    	    { :text => "#{cost+percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	    { :text => "#{@cost+@percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[498,545], width:43, height:10
     	formatted_text_box [
-    	    { :text => "#{cost+percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	    { :text => "#{@cost+@percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[498,170], width:43, height:10
     end
-    def setFive(quantity,unit,tax)
-        quantity = quantity / 1000 if unit == 'K.G.'
-        cost = quantity*tax
-        percent = cost*0.3
+    def setFive(entero,tax)
+        calculator(entero.quantity,tax,entero.unit)
         
         formatted_text_box [
-    	    { :text => "#{quantity}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	    { :text => "#{entero.quantity}", size:9, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[363,530], width:43, height:10
     	formatted_text_box [
-    	    { :text => "#{quantity}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	    { :text => "#{entero.quantity}", size:9, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[363,154], width:43, height:10
     	formatted_text_box [
-    	    { :text => "#{cost}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	    { :text => "#{@cost}", size:9, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[408,530], width:43, height:10
     	formatted_text_box [
-    	    { :text => "#{cost}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	    { :text => "#{@cost}", size:9, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[408,154], width:43, height:10
     	formatted_text_box [
-    	    { :text => "#{percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	    { :text => "#{@percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[453,530], width:43, height:10
     	formatted_text_box [
-    	    { :text => "#{percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	    { :text => "#{@percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[453,154], width:43, height:10
     	formatted_text_box [
-    	    { :text => "#{cost+percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	    { :text => "#{@cost+@percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[498,530], width:43, height:10
     	formatted_text_box [
-    	    { :text => "#{cost+percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	    { :text => "#{@cost+@percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[498,154], width:43, height:10
     end
-    def setSix(quantity,unit,tax)
-        quantity = quantity / 1000 if unit == 'K.G.'
-        cost = quantity*tax
-        percent = cost*0.3
+    def setSix(entero,tax)
+        calculator(entero.quantity,tax,entero.unit)
         
         formatted_text_box [
-    	    { :text => "#{quantity}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	    { :text => "#{entero.quantity}", size:9, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[363,505], width:43, height:10
     	formatted_text_box [
-    	    { :text => "#{quantity}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	    { :text => "#{entero.quantity}", size:9, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[363,130], width:43, height:10
     	formatted_text_box [
-    	    { :text => "#{cost}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	    { :text => "#{@cost}", size:9, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[408,505], width:43, height:10
     	formatted_text_box [
-    	    { :text => "#{cost}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	    { :text => "#{@cost}", size:9, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[408,130], width:43, height:10
     	formatted_text_box [
-    	    { :text => "#{percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	    { :text => "#{@percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[453,505], width:43, height:10
     	formatted_text_box [
-    	    { :text => "#{percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	    { :text => "#{@percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[453,130], width:43, height:10
     	formatted_text_box [
-    	    { :text => "#{cost+percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	    { :text => "#{@cost+@percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[498,505], width:43, height:10
     	formatted_text_box [
-    	    { :text => "#{cost+percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	    { :text => "#{@cost+@percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[498,130], width:43, height:10
     end
 #------TABLE------------------------------------------------------------------------------------------------------------------------------
@@ -616,5 +603,16 @@ class EnteroPdf < Prawn::Document
             when 12
                 'DICIEMBRE'
         end
+    end
+    
+    def calculator(quantity,tax,unit)
+        
+        if unit == 'KILOGRAMO'
+            @quantity = quantity * 0.001
+        else
+            @quantity = quantity
+        end
+        @cost = (@quantity*tax).round(2)
+        @percent = (@cost*0.3).round(2)
     end
 end
