@@ -64,7 +64,7 @@
       </div>
       <div class="col-xs col-md-1">
         <br>
-        <%= link_to 'GENERAR', buildpdf_enteros_path(format:'js'), class:'btn btn-default btn-sm', remote:true %>
+        <%= link_to 'GENERAR', buildpdf_enteros_path(format:'js'), class:'btn btn-default btn-sm generate', remote:true %>
       </div>
       <div class="col-xs col-md-1">
         <br>
@@ -73,4 +73,10 @@
     </div>
 </div>
 <% end %>
-
+<div class='container tag'>
+  <div class='row'>
+    <div class='col-xs col-md-12 be-gray'>
+      <iframe id='myIframe' src=''  style="border: 0"  width="100%" height="600" frameborder="0" scrolling="no"></iframe>
+    </div>
+  <div>
+</div>

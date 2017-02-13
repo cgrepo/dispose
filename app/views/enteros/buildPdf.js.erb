@@ -6,7 +6,9 @@ $rows.each(
     var $col = $(this).find('td');
     enteros.push($col.eq(0).text());
   });
-console.log(enteros);
+
 var url = '/enteros/showEntero?totals=' + enteros;
-console.log(url);
-window.location.href=url;
+
+$('#myIframe').attr("src", url);
+$('.tag').fadeToggle();
+//window.location.href=url;

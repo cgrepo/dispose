@@ -23,6 +23,7 @@ source 'https://rubygems.org'
     gem 'byebug'
     # Use sqlite3 as the database for Active Record
    gem 'sqlite3'
+   gem 'pdfjs_rails'
   end
 
   group :development do

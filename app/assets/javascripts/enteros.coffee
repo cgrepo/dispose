@@ -1,5 +1,6 @@
 $(document).on "turbolinks:load", ->
     $('.btnrm').hide()
+    $('.tag').fadeToggle()
     $('.unit option[value="3"]').attr('disabled','disabled')
     $('.unit option[value="4"]').attr('disabled','disabled')
     $('.services').on 'change', ->
@@ -25,7 +26,7 @@ $(document).on "turbolinks:load", ->
             
 # $('.unit option[value="1"]').prop("disabled", true)
 #             $('.unit option[value="2"]').prop("disabled", true)
-#             $('.unit option[value="3"]').prop("enabled", true)  MESN740106HBSZLC05
+#             $('.unit option[value="3"]').prop("enabled", true)  
             
 # $('.unit option[value="1"]').prop("enabled", true)
 #             $('.unit option[value="2"]').prop("enabled", true)
