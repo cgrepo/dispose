@@ -1,6 +1,8 @@
 $(document).on "turbolinks:load", ->
     $('.btnrm').hide()
     $('.tag').fadeToggle()
+    $('.generate').toggle()
+    $('.pdfcol').hide()
     $('.unit option[value="3"]').attr('disabled','disabled')
     $('.unit option[value="4"]').attr('disabled','disabled')
     $('.services').on 'change', ->
@@ -22,6 +24,7 @@ $(document).on "turbolinks:load", ->
                 $('.unit option[value="3"]').attr('disabled','disabled')#disable M3
                 $('.unit option[value="4"]').attr('disabled','disabled')#disable VEHICLE
                 $('.unit').val(1)#SELECT TON
+    
     
             
 # $('.unit option[value="1"]').prop("disabled", true)

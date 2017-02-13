@@ -9,7 +9,10 @@ $.ajax({
     { 
         $('.display tr:last').remove();
         if ($('.tbone').children('tr').length == 0)
-            $('.btnrm').hide()
+        {
+            $('.btnrm').hide();
+            $('.generate').hide();
+        }
     }
     ,error:function(data)
     { 
