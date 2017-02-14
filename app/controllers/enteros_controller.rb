@@ -4,7 +4,7 @@ class EnterosController < ApplicationController
   # GET /enteros
   # GET /enteros.json
   def index
-    @enteros = Entero.all
+    @enteros = Entero.all.order(:id).paginate(page: params[:page], per_page:20)
   end
 
   # GET /enteros/1
@@ -27,7 +27,7 @@ class EnterosController < ApplicationController
     @entero = Entero.new(entero_params)
       respond_to do |format|
         if @entero.save
-          format.html  { redirect_to @entero, notice: 'Entero was successfully created.' }
+          format.html  { redirect_to @entero, notice: 'Entero fue creado.' }
           format.json { render :show, status: :created, location: @entero }
           format.js
         else
@@ -42,7 +42,7 @@ class EnterosController < ApplicationController
   def update
     respond_to do |format|
       if @entero.update(entero_params)
-        format.html { redirect_to @entero, notice: 'Entero was successfully updated.' }
+        format.html { redirect_to @entero, notice: 'Entero actualizado.' }
         format.json { render :show, status: :ok, location: @entero }
       else
         format.html { render :edit }
@@ -56,7 +56,7 @@ class EnterosController < ApplicationController
   def destroy
     @entero.destroy
     respond_to do |format|
-      format.html { redirect_to enteros_url, notice: 'Entero was successfully destroyed.' }
+      format.html { redirect_to enteros_url, notice: 'Entero borrado.' }
       format.json { head :no_content }
     end
   end

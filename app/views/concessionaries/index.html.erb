@@ -21,9 +21,9 @@
             <tr>
               <td><%= concessionary.name %></td>
               <td><%= concessionary.telephone %></td>
-              <td><%= link_to 'Show', concessionary %></td>
-              <td><%= link_to 'Edit', edit_concessionary_path(concessionary) %></td>
-              <td><%= link_to 'Destroy', concessionary, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+              <td><%= link_to 'Mostrar', concessionary %></td>
+              <td><%= link_to 'Editar', edit_concessionary_path(concessionary) %></td>
+              <td><%= link_to 'Borrar', concessionary, method: :delete, data: { confirm: 'Are you sure?' } %></td>
             </tr>
           <% end %>
         </tbody>

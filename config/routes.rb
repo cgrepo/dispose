@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
 # You can have the root of your site routed with "root"
   
-  root 'enteros#index'
+  root 'enteros#new'
   resources :sessions, only:[:new, :create, :destroy]
   get "/login" => "sessions#new", as: "login"
   delete "/logout" => "sessions#destroy", as: "logout"

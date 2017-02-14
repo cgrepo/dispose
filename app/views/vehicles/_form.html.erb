@@ -12,20 +12,20 @@
   <% end %>
 <div class='container'>
   <div class='row'>
-    <div class='col-xs col-md-6'>
+    <div class='col-xs-4 col-md-6'>
       <%= f.label :Concesionario %><br>
       <%= f.collection_select(:concessionary_id, Concessionary.all, :id, :name,
       {:include_blank => true}, {class:'btn btn-default dropdown-toggle'} ) %>
     </div>
   </div>
   <div class='row'>
-    <div class='col-xs col-md-2'>
+    <div class='col-xs-2 col-md-2'>
       <%= f.label :Placas %><br>
       <%= f.text_field :plate, class:'form-control' %>
     </div>
   </div>
   <div class='row'>
-    <div class="col-xs col-md-2">
+    <div class="col-xs-2 col-md-2">
       <br>
       <%= f.submit %>
     </div>

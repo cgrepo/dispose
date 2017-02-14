@@ -21,7 +21,7 @@ skip_before_action :ensure_login, only: [:new, :create]
   def destroy
    	# only active when logout
     reset_session
-    redirect_to login_path, notice: "You have been log out"
+    redirect_to login_path, notice: "Cierre de sesion satisfactoria"
   end
   
 end

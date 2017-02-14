@@ -18,7 +18,7 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-xs col-md-7">
+      <div class="col-xs-10 col-md-7">
         <%= f.label :servicio %><br>
         <%= f.select :service, 
         [ 
@@ -30,22 +30,22 @@
           ['DISPOSICION FINAL DE LODO ESTABILIZADOS DERIVADO DE PLANTAS DE TRATAMIENTO','6']
         ], {}, {class:'btn btn-default dropdown-toggle services'} %>
       </div>
-      <div class="col-xs col-md-2"> 
+      <div class="col-xs-2 col-md-2"> 
         <%= f.label :UNIDAD %><br>
         <%= f.select :unit, [ ['TON.','1'], ['K.G.','2'], ['M3','3'], ['VEHICULO',4] ], {}, {class:'btn btn-default dropdown-toggle unit'} %>
       </div>
-      <div class="col-xs col-md-1">
+      <div class="col-xs-2 col-md-1">
         <%= f.label :CANTIDAD %><br>
         <%= f.text_field :quantity, class:'form-control cantidad' %>
       </div>
-      <div class='col-xs col-md-2'>
+      <div class='col-xs-3 col-md-2'>
         <br>
         <%= link_to 'ADD', insertServices_enteros_path, class:'btn btn-default btn-sm btnplus', remote:true %>
         <%= link_to 'DEL', deleteServices_enteros_path, class:'btn btn-default btn-sm btnrm', remote:true %>
       </div>
     </div>
     <div class="row">
-      <div class="col-xs col-md-7">
+      <div class="col-xs-8 col-md-7">
         <div class="table-responsive mytable">
           <table class="table table-hover table-striped display">
             <thead>
@@ -62,16 +62,16 @@
           </table>
         </div>
       </div>
-      <div class="col-xs col-md-1">
+      <div class="col-xs-2 col-md-1">
         <br>
         <%= link_to 'GENERAR', buildpdf_enteros_path(format:'js'), class:'btn btn-default btn-sm generate', remote:true %>
       </div>
-      <div class="col-xs col-md-1">
+      <div class="col-xs-2 col-md-1">
         <br>
         <%= link_to 'REGRESAR', enteros_path, class:'btn btn-default btn-sm' %>
       </div>    
     </div>
-</div>
+  </div>
 <% end %>
 <div class='container tag'>
   <div class='row'>

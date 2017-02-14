@@ -28,7 +28,7 @@ class ConcessionariesController < ApplicationController
 
     respond_to do |format|
       if @concessionary.save
-        format.html { redirect_to @concessionary, notice: 'Concessionary was successfully created.' }
+        format.html { redirect_to @concessionary, notice: 'Concessionario creado satisfactoriamente.' }
         format.json { render :show, status: :created, location: @concessionary }
       else
         format.html { render :new }
@@ -42,7 +42,7 @@ class ConcessionariesController < ApplicationController
   def update
     respond_to do |format|
       if @concessionary.update(concessionary_params)
-        format.html { redirect_to @concessionary, notice: 'Concessionary was successfully updated.' }
+        format.html { redirect_to @concessionary, notice: 'Concessionario actualizado.' }
         format.json { render :show, status: :ok, location: @concessionary }
       else
         format.html { render :edit }
@@ -56,7 +56,7 @@ class ConcessionariesController < ApplicationController
   def destroy
     @concessionary.destroy
     respond_to do |format|
-      format.html { redirect_to concessionaries_url, notice: 'Concessionary was successfully destroyed.' }
+      format.html { redirect_to concessionaries_url, notice: 'Concessionario fue borrado.' }
       format.json { head :no_content }
     end
   end
