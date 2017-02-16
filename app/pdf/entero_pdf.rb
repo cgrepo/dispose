@@ -9,6 +9,7 @@ class EnteroPdf < Prawn::Document
         @quantity = 0
         @cost = 0
         @percent = 0
+        @total = 0
     end
 #------PRIVATE METHODS--------------------------------------------------------------------------------------------------------------------
     private
@@ -82,10 +83,10 @@ class EnteroPdf < Prawn::Document
     	    { :text => "#{@percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[453,215], width:43, height:10
     	formatted_text_box [
-    	    { :text => "#{@cost+@percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	    { :text => "#{@total}", size:9, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[498,590], width:43, height:10
     	formatted_text_box [
-    	    { :text => "#{@cost+@percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	    { :text => "#{@total}", size:9, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[498,215], width:43, height:10
     end
     
@@ -125,10 +126,10 @@ class EnteroPdf < Prawn::Document
     	    { :text => "#{@percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[453,200], width:43, height:10
     	formatted_text_box [
-    	    { :text => "#{@cost+@percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	    { :text => "#{@total}", size:9, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[498,575], width:43, height:10
     	formatted_text_box [
-    	    { :text => "#{@cost+@percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	    { :text => "#{@total}", size:9, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[498,200], width:43, height:10
     end
     def setTree(entero,tax)
@@ -153,10 +154,10 @@ class EnteroPdf < Prawn::Document
     	    { :text => "#{@percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[453,185], width:43, height:10
     	formatted_text_box [
-    	    { :text => "#{@cost+@percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	    { :text => "#{@total}", size:9, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[498,560], width:43, height:10
     	formatted_text_box [
-    	    { :text => "#{@cost+@percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	    { :text => "#{@total}", size:9, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[498,185], width:43, height:10
     end
     def setFour(entero,tax)
@@ -181,10 +182,10 @@ class EnteroPdf < Prawn::Document
     	    { :text => "#{@percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[453,170], width:43, height:10
     	formatted_text_box [
-    	    { :text => "#{@cost+@percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	    { :text => "#{@total}", size:9, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[498,545], width:43, height:10
     	formatted_text_box [
-    	    { :text => "#{@cost+@percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	    { :text => "#{@total}", size:9, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[498,170], width:43, height:10
     end
     def setFive(entero,tax)
@@ -209,10 +210,10 @@ class EnteroPdf < Prawn::Document
     	    { :text => "#{@percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[453,154], width:43, height:10
     	formatted_text_box [
-    	    { :text => "#{@cost+@percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	    { :text => "#{@total}", size:9, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[498,530], width:43, height:10
     	formatted_text_box [
-    	    { :text => "#{@cost+@percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	    { :text => "#{@total}", size:9, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[498,154], width:43, height:10
     end
     def setSix(entero,tax)
@@ -237,10 +238,10 @@ class EnteroPdf < Prawn::Document
     	    { :text => "#{@percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[453,130], width:43, height:10
     	formatted_text_box [
-    	    { :text => "#{@cost+@percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	    { :text => "#{@total}", size:9, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[498,505], width:43, height:10
     	formatted_text_box [
-    	    { :text => "#{@cost+@percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	    { :text => "#{@total}", size:9, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[498,130], width:43, height:10
     end
 #------TABLE------------------------------------------------------------------------------------------------------------------------------
@@ -612,7 +613,9 @@ class EnteroPdf < Prawn::Document
         else
             @quantity = quantity
         end
+        
         @cost = (@quantity*tax).round(2)
         @percent = (@cost*0.3).round(2)
+        @total = (@cost + @percent).round(2)
     end
 end

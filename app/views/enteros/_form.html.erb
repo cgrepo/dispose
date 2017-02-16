@@ -16,6 +16,14 @@
         <%= f.label :NOMBRE %><br>
         <%= f.select :taxpayer, Concessionary.all.order(:name).pluck(:name),{}, {class:'btn btn-default dropdown-toggle', id:'taxpayer'} %>
       </div>
+      <div class="col-xs-2 col-md-2"> 
+        <%= f.label :UNIDAD %><br>
+        <%= f.select :unit, [ ['TON.','1'], ['K.G.','2'], ['M3','3'], ['VEHICULO',4] ], {}, {class:'btn btn-default dropdown-toggle unit'} %>
+      </div>
+      <div class="col-xs-2 col-md-1">
+        <%= f.label :CANTIDAD %><br>
+        <%= f.text_field :quantity, class:'form-control cantidad' %>
+      </div>
     </div>
     <div class="row">
       <div class="col-xs-10 col-md-7">
@@ -30,18 +38,13 @@
           ['DISPOSICION FINAL DE LODO ESTABILIZADOS DERIVADO DE PLANTAS DE TRATAMIENTO','6']
         ], {}, {class:'btn btn-default dropdown-toggle services'} %>
       </div>
-      <div class="col-xs-2 col-md-2"> 
-        <%= f.label :UNIDAD %><br>
-        <%= f.select :unit, [ ['TON.','1'], ['K.G.','2'], ['M3','3'], ['VEHICULO',4] ], {}, {class:'btn btn-default dropdown-toggle unit'} %>
-      </div>
-      <div class="col-xs-2 col-md-1">
-        <%= f.label :CANTIDAD %><br>
-        <%= f.text_field :quantity, class:'form-control cantidad' %>
-      </div>
       <div class='col-xs-3 col-md-2'>
         <br>
-        <%= link_to 'ADD', insertServices_enteros_path, class:'btn btn-default btn-sm btnplus', remote:true %>
-        <%= link_to 'DEL', deleteServices_enteros_path, class:'btn btn-default btn-sm btnrm', remote:true %>
+        <%= link_to '', insertServices_enteros_path, class:'btn btn-default btn-sm glyphicon glyphicon-plus-sign btnplus', remote:true %>
+        <%= link_to '', enteros_path, class:'btn btn-default glyphicon glyphicon-list btn-sm' %>
+        <%= link_to '', deleteServices_enteros_path, class:'btn btn-default btn-sm glyphicon glyphicon-trash btnrm', remote:true %>
+        <%= link_to '', buildpdf_enteros_path(format:'js'), class:'btn btn-default btn-sm glyphicon glyphicon-print generate', remote:true %>
+        
       </div>
     </div>
     <div class="row">
@@ -51,6 +54,7 @@
             <thead>
               <tr>
                 <td>ID</td>
+                <td>TIPO</td>
                 <td>COSTO</td>
                 <td>ADICIONAL</td>
                 <td>TOTAL</td>
@@ -62,14 +66,6 @@
           </table>
         </div>
       </div>
-      <div class="col-xs-2 col-md-1">
-        <br>
-        <%= link_to 'GENERAR', buildpdf_enteros_path(format:'js'), class:'btn btn-default btn-sm generate', remote:true %>
-      </div>
-      <div class="col-xs-2 col-md-1">
-        <br>
-        <%= link_to 'REGRESAR', enteros_path, class:'btn btn-default btn-sm' %>
-      </div>    
     </div>
   </div>
 <% end %>

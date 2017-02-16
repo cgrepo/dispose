@@ -10,30 +10,36 @@
         switch(op)
         {
             case '1':
-                tax=4*sm;
+                //tax=4*sm;
+                tax = 320.16;
                 break;
             case '2':
-                tax=5*sm;
+                //tax=5*sm;
+                tax = 400.2;
                 break;
             case '3':
-                tax=3*sm;
+                //tax=3*sm;
+                tax = 240.12;
                 break;
             default:
                 tax=sm;
         }
         if(unit == 'K.G.'){
             cantidad = cantidad * 0.001; 
-            console.log(cantidad);
+            //console.log('kg '+cantidad);
         }
         //var payment = parseFloat(Math.round((tax*cantidad)*100)/100).toFixed(2);
         var payment = Math.round(tax*cantidad);
-        console.log(payment);
+        //console.log('pago '+payment);
+        
         //var percent = parseFloat(Math.round((payment*0.3)*100)/100).toFixed(2);
         var percent = Math.round(payment*0.3);
-        console.log(percent);
+        //console.log('porcentaje '+percent);
+        
         //var total = parseFloat(Math.round((payment+percent)*100)/100).toFixed(2);
         var total = percent + payment;
-        console.log(total);
+        //console.log('total '+total);
+        
         $.ajax({
             type:'POST',
             url:'/enteros/putService',
@@ -42,17 +48,33 @@
             data: { entero: { taxpayer: $('#taxpayer').val(), service: op, unit: unit, quantity: $('.cantidad').val() } }
             ,success: function(data)
             {
-                $('.display').find('tbody:last').append('<tr><td>'+data.id+'</td><td>'+payment+'</td><td>'+percent+'</td><td>'+total+'</td></tr>');
-                $('.unit option[value="1"]').removeAttr('disabled')//enable TON
-                $('.unit option[value="2"]').removeAttr('disabled')//enable KG
-                $('.unit option[value="3"]').attr('disabled','disabled')//disable M3
-                $('.unit option[value="4"]').attr('disabled','disabled')//disable VEHICLE
-                $('.unit').val(1)//SELECT TON
-                $('.cantidad').val('');
-                $('.services').val(1); //establish the value
+                var rowCount = $('.tbone').children('tr').length
+                //console.log('add ' + $('.tbone').children('tr').length);
+                if( rowCount <= 5)
+                {
+                    $('.display').find('tbody:last').append('<tr><td>'+data.id+'</td><td>'+op+'</td><td>'+payment+'</td><td>'+percent+'</td><td>'+total+'</td></tr>');
+                    $('.unit option[value="1"]').removeAttr('disabled')//enable TON
+                    $('.unit option[value="2"]').removeAttr('disabled')//enable KG
+                    $('.unit option[value="3"]').attr('disabled','disabled')//disable M3
+                    $('.unit option[value="4"]').attr('disabled','disabled')//disable VEHICLE
+                    $('.unit').val(1)//SELECT TON
+                    $('.cantidad').val('');
+                    $('.services').val(1); //establish the value
+                    $('.generate').show();
+                }
+                if(rowCount == 5)
+                {
+                    //$('.display').find('tbody:last').append('<tr style="background-color:red; color:red;"><td>'+data.id+'</td><td>'+payment+'</td><td>'+percent+'</td><td>'+total+'</td></tr>');
+                    alert('no se pueden agregar mas de 6 servicios ultimo servicio eliminado');
+                    $('.generate').hide();
+                    $('.btnplus').hide();
+                }
                 
                 $('.btnrm').show();
-                $('.generate').show();
+                //CONTROL SERVICES
+                
+                $('.services option[value="2"]').removeAttr('disabled')
+                
             }
             ,error:function(data)
             { 

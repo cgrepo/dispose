@@ -8,11 +8,19 @@ $.ajax({
     ,success: function(data)
     { 
         $('.display tr:last').remove();
-        if ($('.tbone').children('tr').length == 0)
+        //console.log('del ' + $('.tbone').children('tr').length);
+        var rowCount = $('.tbone').children('tr').length;
+        if (rowCount == 0)
         {
             $('.btnrm').hide();
             $('.generate').hide();
             $('.tag').hide();
+        }
+        
+        if( rowCount <= 6 && rowCount >= 1)
+        {
+            $('.btnplus').show();
+            $('.generate').show();
         }
     }
     ,error:function(data)
