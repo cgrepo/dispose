@@ -1,20 +1,22 @@
 var id = $('.display').find('tr:last td:first').text();
-
+var serviceID = $('.tbone').find('tr:last td:eq(1)').text();
+console.log(serviceID);
 $.ajax({
     type:'DELETE',
     url:'/enteros/popService',
     dataType:'json',
     data: { id: id }
     ,success: function(data)
-    { 
+    {
+        $('.services option[value="'+serviceID+'"]').removeAttr('disabled');
         $('.display tr:last').remove();
-        //console.log('del ' + $('.tbone').children('tr').length);
         var rowCount = $('.tbone').children('tr').length;
         if (rowCount == 0)
         {
             $('.btnrm').hide();
             $('.generate').hide();
             $('.tag').hide();
+            $('#taxpayer').prop('disabled',false);
         }
         
         if( rowCount <= 6 && rowCount >= 1)
