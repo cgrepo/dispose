@@ -1,63 +1,70 @@
 var concessionary = $('#taxpayer').val();
 var serviceID = $('.services option:selected').val();
-var units = $('.unit option:selected').text();
-var quantities = $('.cantidad').val();
-
-if($.isNumeric(quantities))
+if(serviceID != '')
 {
-    switch(serviceID)
-    {
-        case '1':
-            tax = 320.16;
-            break;
-        case '2':
-            tax = 400.2;
-            break;
-        case '3':
-            tax = 240.12;
-            break;
-        default:
-                tax=80.04;
-    }
-
-    if(units == 'K.G.')
-        quantities = quantities * 0.001;
-        
-    var payment = Math.round(tax*quantities);
-    var percent = Math.round(payment*0.3);
-    var total = percent + payment;
-    var rowCount = $('.tbone').children('tr').length;
+    var units = $('.unit option:selected').text();
+    var quantities = $('.cantidad').val();
     
-    if( rowCount <= 5)
+    if($.isNumeric(quantities))
     {
-        $('.unit').val(1);                                         //SELECT TON
-        $('.cantidad').val('');
-        $('.services').val('');                                    //establish the value
-        $('.generate').show();
-        $.ajax({
-            type:'POST'
-            ,url:'/enteros/putService'
-            ,dataType:'json'
-            ,cache: false
-            ,data: { entero: { taxpayer: concessionary, service: serviceID, unit: units, quantity: quantities } }
-            ,success: function(data){
-                $('.display').find('tbody:last').append('<tr><td>'+data.id+'</td><td>'+serviceID+'</td><td>'+payment+'</td><td>'+percent+'</td><td>'+total+'</td></tr>');
-                $('.btnrm').show();
-                $('#taxpayer').prop('disabled',true);
-                $('.services option[value="'+serviceID+'"]').attr('disabled','disabled');
-            }
-            ,error:function(data) { console.log(data); debugger;  }
-        });
+        switch(serviceID)
+        {
+            case '1':
+                tax = 320.16;
+                break;
+            case '2':
+                tax = 400.2;
+                break;
+            case '3':
+                tax = 240.12;
+                break;
+            default:
+                    tax=80.04;
+        }
+    
+        if(units == 'K.G.')
+            quantities = quantities * 0.001;
+            
+        var payment = Math.round(tax*quantities);
+        var percent = Math.round(payment*0.3);
+        var total = percent + payment;
+        var rowCount = $('.tbone').children('tr').length;
+        
+        if( rowCount <= 5)
+        {
+            $('.unit').val(1);                                         //SELECT TON
+            $('.cantidad').val('');
+            $('.services').val('');                                    //establish the value
+            $('.generate').show();
+            $.ajax({
+                type:'POST'
+                ,url:'/enteros/putService'
+                ,dataType:'json'
+                ,cache: false
+                ,data: { entero: { taxpayer: concessionary, service: serviceID, unit: units, quantity: quantities } }
+                ,success: function(data){
+                    $('.display').find('tbody:last').append('<tr><td>'+data.id+'</td><td>'+serviceID+'</td><td>'+payment+'</td><td>'+percent+'</td><td>'+total+'</td></tr>');
+                    $('.btnrm').show();
+                    $('#taxpayer').prop('disabled',true);
+                    $('.services option[value="'+serviceID+'"]').attr('disabled','disabled');
+                }
+                ,error:function(data) { console.log(data); }
+            });
+        }
+        else
+        {
+            alert('no se pueden agregar mas de 6 servicios ultimo servicio eliminado');
+            $('.generate').hide();
+            $('.btnplus').hide();
+        }
     }
     else
     {
-        alert('no se pueden agregar mas de 6 servicios ultimo servicio eliminado');
-        $('.generate').hide();
-        $('.btnplus').hide();
+        alert('proporcionar solo numeros!');
+        $('.cantidad').val('');
     }
 }
 else
 {
-    alert('proporcionar solo numeros!');
-    $('.cantidad').val('');
+    alert('Debe seleccionar un servicio para poder continuar');
 }

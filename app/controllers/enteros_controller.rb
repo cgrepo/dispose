@@ -69,10 +69,12 @@ class EnterosController < ApplicationController
   
   def putService
     @entero = Entero.new(entero_params)
+    @entero.concessionary = set_concessionary
+    
     respond_to do |format|
       if @entero.save
         format.json { render :show, status: :created, location: @entero }
-        format.js 
+        format.js
       end
     end
   end
@@ -117,7 +119,10 @@ class EnterosController < ApplicationController
     def set_entero
       @entero = Entero.find(params[:id])
     end
-
+    
+    def set_concessionary
+      Concessionary.find_by name:entero_params[:taxpayer]
+    end
     # Never trust parameters from the scary internet, only allow the white list through.
     def entero_params
       params.require(:entero).permit(:taxpayer, :service, :unit, :quantity)

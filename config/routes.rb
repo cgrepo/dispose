@@ -16,7 +16,6 @@ Rails.application.routes.draw do
           get 'deleteServices', to:'enteros#deleteServices'
           post 'putService', to:'enteros#putService'
           delete 'popService', to:'enteros#popService'
-          
       end
   end
   

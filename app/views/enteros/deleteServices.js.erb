@@ -1,6 +1,5 @@
 var id = $('.display').find('tr:last td:first').text();
 var serviceID = $('.tbone').find('tr:last td:eq(1)').text();
-console.log(serviceID);
 $.ajax({
     type:'DELETE',
     url:'/enteros/popService',
