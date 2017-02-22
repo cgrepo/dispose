@@ -61,35 +61,16 @@ class EnteroPdf < Prawn::Document
     	formatted_text_box [
     	    { :text => "#{unit}", size:med, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[317,215], width:45, height:10
-        
         calculator(entero.quantity,tax,unit)
-        
-        formatted_text_box [
-    	    { :text => "#{entero.quantity}", size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[363,590], width:43, height:10
-    	formatted_text_box [
-    	    { :text => "#{entero.quantity}", size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[363,215], width:43, height:10
-       	formatted_text_box [
-    	    { :text => "#{(@cost*100).round / 100}", size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[408,590], width:43, height:10
-    	formatted_text_box [
-    	    { :text => "#{@cost}", size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[408,215], width:43, height:10 
-    	formatted_text_box [
-    	    { :text => "#{@percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[453,590], width:43, height:10
-    	formatted_text_box [
-    	    { :text => "#{@percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[453,215], width:43, height:10
-    	formatted_text_box [
-    	    { :text => "#{@total}", size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[498,590], width:43, height:10
-    	formatted_text_box [
-    	    { :text => "#{@total}", size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[498,215], width:43, height:10
+        setTexts(363,590,"#{entero.quantity}")
+        setTexts(363,215,"#{entero.quantity}")
+    	setTexts(408,590,"#{@cost}")
+    	setTexts(408,215,"#{@cost}")
+        setTexts(453,590,"#{@percent}")
+    	setTexts(453,215,"#{@percent}")
+        setTexts(498,590,"#{@total}")
+    	setTexts(498,215,"#{@total}")
     end
-    
     def setTwo(entero,tax)
         if entero.unit == 'K.G.'
             med = 8
@@ -104,145 +85,59 @@ class EnteroPdf < Prawn::Document
     	formatted_text_box [
     	    { :text => "#{unit}", size:med, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[317,200], width:45, height:10
-    	
     	calculator(entero.quantity,tax,unit)
-    	
-        formatted_text_box [
-    	    { :text => "#{entero.quantity}", size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[363,575], width:43, height:10
-    	formatted_text_box [
-    	    { :text => "#{entero.quantity}", size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[363,200], width:43, height:10
-    	formatted_text_box [
-    	    { :text => "#{@cost}", size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[408,575], width:43, height:10
-    	formatted_text_box [
-    	    { :text => "#{@cost}", size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[408,200], width:43, height:10
-    	formatted_text_box [
-    	    { :text => "#{@percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[453,575], width:43, height:10
-    	formatted_text_box [
-    	    { :text => "#{@percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[453,200], width:43, height:10
-    	formatted_text_box [
-    	    { :text => "#{@total}", size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[498,575], width:43, height:10
-    	formatted_text_box [
-    	    { :text => "#{@total}", size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[498,200], width:43, height:10
+    	setTexts(363,575,"#{entero.quantity}")
+        setTexts(363,200,"#{entero.quantity}")
+    	setTexts(408,575,"#{@cost}")
+    	setTexts(408,200,"#{@cost}")
+        setTexts(453,575,"#{@percent}")
+    	setTexts(453,200,"#{@percent}")
+        setTexts(498,575,"#{@total}")
+    	setTexts(498,200,"#{@total}")
     end
     def setTree(entero,tax)
         calculator(entero.quantity,tax,entero.unit)
-        
-        formatted_text_box [
-    	    { :text => "#{entero.quantity}", size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[363,560], width:43, height:10
-    	formatted_text_box [
-    	    { :text => "#{entero.quantity}", size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[363,185], width:43, height:10
-    	formatted_text_box [
-    	    { :text => "#{@cost}", size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[408,560], width:43, height:10
-    	formatted_text_box [
-    	    { :text => "#{@cost}", size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[408,185], width:43, height:10
-    	formatted_text_box [
-    	    { :text => "#{@percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[453,560], width:43, height:10
-    	formatted_text_box [
-    	    { :text => "#{@percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[453,185], width:43, height:10
-    	formatted_text_box [
-    	    { :text => "#{@total}", size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[498,560], width:43, height:10
-    	formatted_text_box [
-    	    { :text => "#{@total}", size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[498,185], width:43, height:10
+        setTexts(363,560,"#{entero.quantity}")
+        setTexts(363,185,"#{entero.quantity}")
+    	setTexts(408,560,"#{@cost}")
+    	setTexts(408,185,"#{@cost}")
+        setTexts(453,560,"#{@percent}")
+    	setTexts(453,185,"#{@percent}")
+        setTexts(498,560,"#{@total}")
+    	setTexts(498,185,"#{@total}")
     end
     def setFour(entero,tax)
         calculator(entero.quantity,tax,entero.unit)
-        
-        formatted_text_box [
-    	    { :text => "#{entero.quantity}", size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[363,545], width:43, height:10
-    	formatted_text_box [
-    	    { :text => "#{entero.quantity}", size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[363,170], width:43, height:10
-    	formatted_text_box [
-    	    { :text => "#{@cost}", size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[408,545], width:43, height:10
-    	formatted_text_box [
-    	    { :text => "#{@cost}", size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[408,170], width:43, height:10
-    	formatted_text_box [
-    	    { :text => "#{@percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[453,545], width:43, height:10
-    	formatted_text_box [
-    	    { :text => "#{@percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[453,170], width:43, height:10
-    	formatted_text_box [
-    	    { :text => "#{@total}", size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[498,545], width:43, height:10
-    	formatted_text_box [
-    	    { :text => "#{@total}", size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[498,170], width:43, height:10
+        setTexts(363,545,"#{entero.quantity}")
+        setTexts(363,170,"#{entero.quantity}")
+    	setTexts(408,545,"#{@cost}")
+    	setTexts(408,170,"#{@cost}")
+        setTexts(453,545,"#{@percent}")
+    	setTexts(453,170,"#{@percent}")
+        setTexts(498,545,"#{@total}")
+    	setTexts(498,170,"#{@total}")
     end
     def setFive(entero,tax)
         calculator(entero.quantity,tax,entero.unit)
-        
-        formatted_text_box [
-    	    { :text => "#{entero.quantity}", size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[363,530], width:43, height:10
-    	formatted_text_box [
-    	    { :text => "#{entero.quantity}", size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[363,154], width:43, height:10
-    	formatted_text_box [
-    	    { :text => "#{@cost}", size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[408,530], width:43, height:10
-    	formatted_text_box [
-    	    { :text => "#{@cost}", size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[408,154], width:43, height:10
-    	formatted_text_box [
-    	    { :text => "#{@percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[453,530], width:43, height:10
-    	formatted_text_box [
-    	    { :text => "#{@percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[453,154], width:43, height:10
-    	formatted_text_box [
-    	    { :text => "#{@total}", size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[498,530], width:43, height:10
-    	formatted_text_box [
-    	    { :text => "#{@total}", size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[498,154], width:43, height:10
+        setTexts(363,530,"#{entero.quantity}")
+        setTexts(363,154,"#{entero.quantity}")
+    	setTexts(408,530,"#{@cost}")
+    	setTexts(408,154,"#{@cost}")
+        setTexts(453,530,"#{@percent}")
+    	setTexts(453,154,"#{@percent}")
+        setTexts(498,530,"#{@total}")
+    	setTexts(498,154,"#{@total}")
     end
     def setSix(entero,tax)
         calculator(entero.quantity,tax,entero.unit)
-        
-        formatted_text_box [
-    	    { :text => "#{entero.quantity}", size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[363,505], width:43, height:10
-    	formatted_text_box [
-    	    { :text => "#{entero.quantity}", size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[363,130], width:43, height:10
-    	formatted_text_box [
-    	    { :text => "#{@cost}", size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[408,505], width:43, height:10
-    	formatted_text_box [
-    	    { :text => "#{@cost}", size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[408,130], width:43, height:10
-    	formatted_text_box [
-    	    { :text => "#{@percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[453,505], width:43, height:10
-    	formatted_text_box [
-    	    { :text => "#{@percent}", size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[453,130], width:43, height:10
-    	formatted_text_box [
-    	    { :text => "#{@total}", size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[498,505], width:43, height:10
-    	formatted_text_box [
-    	    { :text => "#{@total}", size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[498,130], width:43, height:10
+        setTexts(363,505,"#{entero.quantity}")
+        setTexts(363,130,"#{entero.quantity}")
+    	setTexts(408,505,"#{@cost}")
+    	setTexts(408,130,"#{@cost}")
+        setTexts(453,505,"#{@percent}")
+    	setTexts(453,130,"#{@percent}")
+        setTexts(498,505,"#{@total}")
+    	setTexts(498,130,"#{@total}")
     end
 #------TABLE------------------------------------------------------------------------------------------------------------------------------
     def setTable
@@ -607,15 +502,22 @@ class EnteroPdf < Prawn::Document
     end
     
     def calculator(quantity,tax,unit)
-        
         if unit == 'KILOGRAMO'
             @quantity = quantity * 0.001
         else
             @quantity = quantity
         end
-        
         @cost = (@quantity*tax).round(2)
         @percent = (@cost*0.3).round(2)
         @total = (@cost + @percent).round(2)
+    end
+    
+    def setTexts(x,y,message)
+         bounding_box([x,y], width:43, height:10) do
+            font('Calibri', size:9) do
+                text message, align: :center
+            end
+            #stroke_bounds 
+        end
     end
 end
