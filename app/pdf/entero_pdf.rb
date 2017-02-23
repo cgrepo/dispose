@@ -27,13 +27,16 @@ class EnteroPdf < Prawn::Document
     end
 #------QUANTITYES-------------------------------------------------------------------------------------------------------------------------
     def setQuantities(enteros,sm)
+        printOne = true
+        printTwo = true
         enteros.each do |entero|
-
             case entero.service
                 when '1'
                     setOne(entero,(sm*4))
+                    printOne = false
                 when '2'
                     setTwo(entero,(sm*5))
+                    printTwo = false
                 when '3'
                     setTree(entero,(sm*3))
                 when '4'
@@ -44,6 +47,8 @@ class EnteroPdf < Prawn::Document
                     setSix(entero,sm)
             end
         end
+        checkPrint(printOne,1)
+        checkPrint(printTwo,2)
     end
     
     def setOne(entero,tax)
@@ -518,6 +523,23 @@ class EnteroPdf < Prawn::Document
                 text message, align: :center
             end
             #stroke_bounds 
+        end
+    end
+    
+    def checkPrint(shallPrint,who)
+        if who == 1
+            rows = [590,215]
+        else
+            rows = [575,200]
+        end
+        
+        if shallPrint
+            formatted_text_box [
+        	    { :text => "TONELADA", size:9, style:[:normal], font:"Calibri", color:'000000' }
+            ], at:[317,rows[0]], width:45, height:10
+            formatted_text_box [
+                { :text => "TONELADA", size:9, style:[:normal], font:"Calibri", color:'000000' }
+            ], at:[317,rows[1]], width:45, height:10
         end
     end
 end
