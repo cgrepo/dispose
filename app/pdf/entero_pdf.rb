@@ -29,6 +29,7 @@ class EnteroPdf < Prawn::Document
     def setQuantities(enteros,sm)
         printOne = true
         printTwo = true
+        
         enteros.each do |entero|
             case entero.service
                 when '1'
