@@ -1,5 +1,5 @@
 class DebtsController < ApplicationController
-  before_action :set_vehicle, only[:create, :destroy]
+  before_action :set_vehicle, only: [:create, :destroy]
   
   def create
     @debt = @vehicle.debts.new(debt_params)
