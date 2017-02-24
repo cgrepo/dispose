@@ -1,12 +1,21 @@
+// GET CONCESSIONARY
 var concessionary = $('#taxpayer').val();
+// GET SERVICE ID
 var serviceID = $('.services option:selected').val();
-if(serviceID != '')
+
+if(serviceID != '') //DID NOT SELECT SERVICE DONT LET CONTINUE
 {
+    //GET UNIT(S)
     var units = $('.unit option:selected').text();
+    // GET QUANTITIES
     var quantities = $('.cantidad').val();
+    
+    console.log(quantities);
+    console.log(units);
     
     if($.isNumeric(quantities))
     {
+        //SET TAX BASED ON SERVICE ID
         switch(serviceID)
         {
             case '1':
@@ -21,28 +30,39 @@ if(serviceID != '')
             default:
                     tax=80.04;
         }
-    
+        
+        // CHANGE UNIT IF ITS KG
         if(units == 'K.G.')
             quantities = quantities * 0.001;
-            
+        console.log(quantities);
+        
+        //SET CALCS
         var payment = Math.round(tax*quantities);
         var percent = Math.round(payment*0.3);
         var total = percent + payment;
+        
+        //RESTABLISH QUANTITY
+        quantities = $('.cantidad').val();
+        
+        // GET NUMBER OF ROWS
         var rowCount = $('.tbone').children('tr').length;
         
+        //DONT ALLOW MORE THAN 6 SERVICES
         if( rowCount <= 5)
         {
-            $('.unit').val(1);                                         //SELECT TON
-            $('.cantidad').val('');
-            $('.services').val('');                                    //establish the value
-            $('.generate').show();
             $.ajax({
                 type:'POST'
                 ,url:'/enteros/putService'
                 ,dataType:'json'
                 ,cache: false
                 ,data: { entero: { taxpayer: concessionary, service: serviceID, unit: units, quantity: quantities } }
-                ,success: function(data){
+                ,success: function(data)
+                {
+                    // SINCE WE ADD THE SERVICE THEN WHE RELOAD THE INFO ON UI
+                    $('.unit').val(1);                                         //SELECT TON
+                    $('.cantidad').val('');
+                    $('.services').val('');                                    //establish the value
+                    $('.generate').show();
                     $('.display').find('tbody:last').append('<tr><td>'+data.id+'</td><td>'+serviceID+'</td><td>'+payment+'</td><td>'+percent+'</td><td>'+total+'</td></tr>');
                     $('.btnrm').show();
                     $('#taxpayer').prop('disabled',true);
