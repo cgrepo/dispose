@@ -5,8 +5,8 @@ if(serviceID != '')
 {
     var units = $('.unit option:selected').text();
     var quantities = $('.cantidad').val();
-    console.log(quantities);
-    console.log(units);
+    //console.log(quantities);
+    //console.log(units);
     if($.isNumeric(quantities))
     {
         switch(serviceID)
@@ -26,7 +26,7 @@ if(serviceID != '')
         
         if(units == 'K.G.')
             quantities = quantities * 0.001;
-        console.log(quantities);
+        //console.log(quantities);
         var payment = Math.round(tax*quantities);
         var percent = Math.round(payment*0.3);
         var total = percent + payment;
