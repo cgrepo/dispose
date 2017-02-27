@@ -16,6 +16,7 @@ source 'https://rubygems.org'
  gem 'jquery-ui-rails'
  gem 'prawn'
  gem 'rails-i18n'
+ gem 'puma' #recommendation by heroku
 # gem 'web-console', '~> 2.0' ----> HEROKU COMPLAINS
 #groups
   group :development, :test do
