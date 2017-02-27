@@ -23,7 +23,7 @@
                 <td><%= vehicle.plate %></td>
                 <td><%= link_to 'Mostrar', vehicle %></td>
                 <td><%= link_to 'Editar', edit_vehicle_path(vehicle) %></td>
-                <td><%= link_to 'Borrar', vehicle, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+                <td><%= link_to 'Borrar', vehicle, method: :delete, data: { confirm: 'Esta usted seguro?' } %></td>
               </tr>
             <% end %>
           </tbody>
