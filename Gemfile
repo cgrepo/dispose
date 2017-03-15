@@ -17,11 +17,12 @@ source 'https://rubygems.org'
  gem 'prawn'
  gem 'rails-i18n'
  gem 'puma' #recommendation by heroku
-# gem 'web-console', '~> 2.0' ----> HEROKU COMPLAINS
+ gem 'pry', group: :development
+ 
 #groups
   group :development, :test do
     # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-    gem 'byebug'
+    #gem 'byebug'
     # Use sqlite3 as the database for Active Record
    gem 'sqlite3'
    gem 'pdfjs_rails'

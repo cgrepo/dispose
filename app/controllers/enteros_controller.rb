@@ -105,6 +105,7 @@ class EnterosController < ApplicationController
     
     respond_to do |format|
       format.html do
+        
         pdf = EnteroPdf.new(@enteros)
         send_data pdf.render,
           filename: "entero_relleno.pdf",

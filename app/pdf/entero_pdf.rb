@@ -2,10 +2,10 @@ class EnteroPdf < Prawn::Document
     def initialize(enteros)
         super()
         @enteros = enteros
-        @SM = 80.04
+        @UMA = 75.49
         @folio = Time.now.strftime("%d%m%Y-%j-#{Concessionary.find_by(name:@enteros.first.taxpayer).id}")
         setUp
-        setQuantities(@enteros,@SM)
+        setQuantities(@enteros,@UMA)
         @quantity = 0
         @cost = 0
         @percent = 0
@@ -26,26 +26,26 @@ class EnteroPdf < Prawn::Document
         setTable
     end
 #------QUANTITYES-------------------------------------------------------------------------------------------------------------------------
-    def setQuantities(enteros,sm)
+    def setQuantities(enteros,uma)
         printOne = true
         printTwo = true
         
         enteros.each do |entero|
             case entero.service
                 when '1'
-                    setOne(entero,(sm*4))
+                    setOne(entero,(uma*4))
                     printOne = false
                 when '2'
-                    setTwo(entero,(sm*5))
+                    setTwo(entero,(uma*5))
                     printTwo = false
                 when '3'
-                    setTree(entero,(sm*3))
+                    setTree(entero,(uma*3))
                 when '4'
-                    setFour(entero,sm)
+                    setFour(entero,uma)
                 when '5'
-                    setFive(entero,sm)
+                    setFive(entero,uma)
                 when '6'
-                    setSix(entero,sm)
+                    setSix(entero,uma)
             end
         end
         checkPrint(printOne,1)
@@ -426,7 +426,7 @@ class EnteroPdf < Prawn::Document
     	    vertical_line  110,230, at:496 #2
     	end
         dash([1, 2, 3, 4, 5, 6, 7, 8])
-        stroke_horizontal_line -30, 590, :at => 350
+        stroke_horizontal_line(-30, 590, :at => 350)
     end
 #------FOOT-------------------------------------------------------------------------------------------------------------------------------
     def setFoot
