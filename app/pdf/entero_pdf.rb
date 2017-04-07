@@ -1,27 +1,35 @@
-class HighlightCallback
-  def initialize(options)
-    @color    = options[:color]
-    @document = options[:document]
-  end
-  def render_behind(fragment)
-    original_color       = @document.fill_color
-    @document.fill_color = @color
-    @document.fill_rectangle(fragment.top_left, fragment.width, fragment.height)
-    @document.fill_color = original_color
-  end
-end
+# class HighlightCallback
+#   def initialize(options)
+#     @color    = options[:color]
+#     @document = options[:document]
+#   end
+#   def render_behind(fragment)
+#     original_color       = @document.fill_color
+#     @document.fill_color = @color
+#     @document.fill_rectangle(fragment.top_left, fragment.width, fragment.height)
+#     @document.fill_color = original_color
+#   end
+# end
+#require 'action_view'
+#include ActionView::Helpers::NumberHelper
+require 'active_support'
+
 class EnteroPdf < Prawn::Document
+    include ActiveSupport::NumberHelper
     def initialize(enteros)
         super()
+        
         @enteros = enteros
         @UMA = 75.49
         @folio = Time.now.strftime("%d%m%Y-%j-#{Concessionary.find_by(name:@enteros.first.taxpayer).id}")
-        setUp
-        setQuantities(@enteros,@UMA)
+        @grandTotal = 0
         @quantity = 0
         @cost = 0
         @percent = 0
         @total = 0
+        setUp
+        setQuantities(@enteros,@UMA)
+        setFoot
     end
 #------PRIVATE METHODS--------------------------------------------------------------------------------------------------------------------
     private
@@ -33,7 +41,6 @@ class EnteroPdf < Prawn::Document
         #stroke_axis(at:[1,609], height:140, width:600, color:'FF00', step_length:50)
         Prawn::Font::AFM.hide_m17n_warning = true
         setHeaders
-        setFoot
         setShapes
         setTable
     end
@@ -161,11 +168,11 @@ class EnteroPdf < Prawn::Document
     def setTable
     #------TABLA-------HEADERS------------------------------------------------------------------------------------------------------------
     	formatted_text_box [
-    	    { :text => 'No.', size:9, style:[:bold], font:"Calibri", color:'000000' }
-    	], at:[26,604], width:15, height:10
+    	    { :text => 'clave', size:8, style:[:bold], font:"Calibri", color:'000000' }
+    	], at:[26,604], width:20, height:10
     	formatted_text_box [
-    	    { :text => 'No.', size:9, style:[:bold], font:"Calibri", color:'000000' }
-    	], at:[26,229], width:15, height:10
+    	    { :text => 'clave', size:8, style:[:bold], font:"Calibri", color:'000000' }
+    	], at:[26,229], width:20, height:10
     	
     	formatted_text_box [
     	    { :text => 'S E R V I C I O', size:9, style:[:bold], font:"Calibri", color:'000000' }
@@ -208,47 +215,47 @@ class EnteroPdf < Prawn::Document
     	formatted_text_box [
     	    { :text => 'TOTAL', size:9, style:[:bold], font:"Calibri", color:'000000' }
     	], at:[506,229], width:30, height:10
-    #------1-----------------------------------------------------------------------------------------------------------------------------------
+    #------1------------------------------------------------------------------------------------------------------------------------------
     	formatted_text_box [
-    	    { :text => '1', size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[26,590], width:10, height:10
+    	    { :text => '22', size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	], at:[29,590], width:10, height:10
     	formatted_text_box [
-    	    { :text => '1', size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[26,215], width:10, height:10
+    	    { :text => '22', size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	], at:[29,215], width:10, height:10
     	
     	formatted_text_box [
-    	    { :text => 'DISPOSICION FINAL DE RESIDUOS SOLIDOS COMERCIAL clv.22', size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	    { :text => 'DISPOSICION FINAL DE RESIDUOS SOLIDOS COMERCIAL', size:9, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[48,590], width:309, height:10
     	formatted_text_box [
-    	    { :text => 'DISPOSICION FINAL DE RESIDUOS SOLIDOS COMERCIAL clv.22', size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	    { :text => 'DISPOSICION FINAL DE RESIDUOS SOLIDOS COMERCIAL', size:9, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[48,215], width:309, height:10
-    #------2-----------------------------------------------------------------------------------------------------------------------------------
+    #------2------------------------------------------------------------------------------------------------------------------------------
     	formatted_text_box [
-    	    { :text => '2', size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[26,575], width:10, height:10
+    	    { :text => '23', size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	], at:[29,575], width:10, height:10
     	formatted_text_box [
-    	    { :text => '2', size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[26,200], width:10, height:10
+    	    { :text => '23', size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	], at:[29,200], width:10, height:10
     	
     	formatted_text_box [
-    	    { :text => 'DISPOSICION FINAL DE ESCOMBROS DE CONSTRUCCION COMERCIAL clv.23', size:9, style:[:normal], font:"Calibri", color:'000000' } 
+    	    { :text => 'DISPOSICION FINAL DE ESCOMBROS DE CONSTRUCCION COMERCIAL', size:9, style:[:normal], font:"Calibri", color:'000000' } 
     	], at:[48,575], width:320, height:10
     	formatted_text_box [
-    	    { :text => 'DISPOSICION FINAL DE ESCOMBROS DE CONSTRUCCION COMERCIAL clv.23', size:9, style:[:normal], font:"Calibri", color:'000000' } 
+    	    { :text => 'DISPOSICION FINAL DE ESCOMBROS DE CONSTRUCCION COMERCIAL', size:9, style:[:normal], font:"Calibri", color:'000000' } 
     	], at:[48,200], width:320, height:10
-    #------3-----------------------------------------------------------------------------------------------------------------------------------
+    #------3------------------------------------------------------------------------------------------------------------------------------
     	formatted_text_box [
-    	    { :text => '3', size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[26,560], width:10, height:10
+    	    { :text => '24', size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	], at:[29,560], width:10, height:10
     	formatted_text_box [
-    	    { :text => '3', size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[26,185], width:10, height:10
+    	    { :text => '24', size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	], at:[29,185], width:10, height:10
     	
     	formatted_text_box [
-    	    { :text => 'DISPOSICION FINAL DE RESTOS DE ANIMALES COMERCIAL clv.24', size:9, style:[:normal], font:"Calibri", color:'000000' } 
+    	    { :text => 'DISPOSICION FINAL DE RESTOS DE ANIMALES COMERCIAL', size:9, style:[:normal], font:"Calibri", color:'000000' } 
     	], at:[48,560], width:320, height:10
     	formatted_text_box [
-    	    { :text => 'DISPOSICION FINAL DE RESTOS DE ANIMALES COMERCIAL clv.24', size:9, style:[:normal], font:"Calibri", color:'000000' } 
+    	    { :text => 'DISPOSICION FINAL DE RESTOS DE ANIMALES COMERCIAL', size:9, style:[:normal], font:"Calibri", color:'000000' } 
     	], at:[48,185], width:320, height:10
     	
         formatted_text_box [
@@ -257,19 +264,19 @@ class EnteroPdf < Prawn::Document
     	formatted_text_box [
     	    { :text => 'VEHICULO', size:9, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[317,185], width:45, height:10
-    #------4-----------------------------------------------------------------------------------------------------------------------------------
+    #------4------------------------------------------------------------------------------------------------------------------------------
     	formatted_text_box [
-    	    { :text => '4', size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[26,545], width:10, height:10
+    	    { :text => '25', size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	], at:[29,545], width:10, height:10
     	formatted_text_box [
-    	    { :text => '4', size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[26,170], width:10, height:10
+    	    { :text => '25', size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	], at:[29,170], width:10, height:10
     	
     	formatted_text_box [
-    	    { :text => 'DISPOSICION FINAL DE RAMAS Y DESECHOS DE JARDINERIA COMERCIAL clv.25', size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	    { :text => 'DISPOSICION FINAL DE RAMAS Y DESECHOS DE JARDINERIA COMERCIAL', size:9, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[48,545], width:309, height:10
     	formatted_text_box [
-    	    { :text => 'DISPOSICION FINAL DE RAMAS Y DESECHOS DE JARDINERIA COMERCIAL clv.25', size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	    { :text => 'DISPOSICION FINAL DE RAMAS Y DESECHOS DE JARDINERIA COMERCIAL', size:9, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[48,170], width:309, height:10
     	
     	formatted_text_box [
@@ -285,19 +292,19 @@ class EnteroPdf < Prawn::Document
     	formatted_text_box [
     	    { :text => '3', size:6, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[340,170], width:10, height:10
-    #------5-----------------------------------------------------------------------------------------------------------------------------------
+    #------5------------------------------------------------------------------------------------------------------------------------------
     	formatted_text_box [
-    	    { :text => '5', size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[26,530], width:10, height:10
+    	    { :text => '26', size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	], at:[29,530], width:10, height:10
     	formatted_text_box [
-    	    { :text => '5', size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[26,154], width:10, height:10
+    	    { :text => '26', size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	], at:[29,154], width:10, height:10
     	
     	formatted_text_box [
-    	    { :text => 'DISPOSICION FINAL DE LLANTAS DE VEHICULOS DE AUTOMORES COMERCIAL clv.26 ', size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	    { :text => 'DISPOSICION FINAL DE LLANTAS DE VEHICULOS DE AUTOMORES COMERCIAL', size:9, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[48,530], width:270, height:20
     	formatted_text_box [
-    	    { :text => 'DISPOSICION FINAL DE LLANTAS DE VEHICULOS DE AUTOMORES COMERCIAL clv.26 ', size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	    { :text => 'DISPOSICION FINAL DE LLANTAS DE VEHICULOS DE AUTOMORES COMERCIAL', size:9, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[48,154], width:270, height:20
     	
     	formatted_text_box [
@@ -313,19 +320,19 @@ class EnteroPdf < Prawn::Document
     	formatted_text_box [
     	    { :text => '3', size:6, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[340,154], width:10, height:10
-    #------6-----------------------------------------------------------------------------------------------------------------------------------
+    #------6------------------------------------------------------------------------------------------------------------------------------
     	formatted_text_box [
-    	    { :text => '6', size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[26,505], width:10, height:10
+    	    { :text => '27', size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	], at:[29,505], width:10, height:10
     	formatted_text_box [
-    	    { :text => '6', size:9, style:[:normal], font:"Calibri", color:'000000' }
-    	], at:[26,130], width:10, height:10
+    	    { :text => '27', size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	], at:[29,130], width:10, height:10
     	
    		formatted_text_box [
-    	    { :text => 'DISPOSICION FINAL DE LODOS ESTABILIZADOS DERIVADO DE PLANTAS DE TRATAMIENTO clv.27', size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	    { :text => 'DISPOSICION FINAL DE LODOS ESTABILIZADOS DERIVADO DE PLANTAS DE TRATAMIENTO', size:9, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[48,505], width:260, height:20
     	formatted_text_box [
-    	    { :text => 'DISPOSICION FINAL DE LODOS ESTABILIZADOS DERIVADO DE PLANTAS DE TRATAMIENTO clv.27', size:9, style:[:normal], font:"Calibri", color:'000000' }
+    	    { :text => 'DISPOSICION FINAL DE LODOS ESTABILIZADOS DERIVADO DE PLANTAS DE TRATAMIENTO', size:9, style:[:normal], font:"Calibri", color:'000000' }
     	], at:[48,130], width:260, height:20
     	
     	formatted_text_box [
@@ -426,10 +433,10 @@ class EnteroPdf < Prawn::Document
     	    horizontal_line 23,280, at:410 #1
     	    horizontal_line 23,280, at:35 #2
     	    
+    	    vertical_line  485,605, at:44  #1
+    	    vertical_line  110,230, at:44  #2
     	    vertical_line  485,605, at:315 #1
     	    vertical_line  110,230, at:315 #2
-    	    vertical_line  485,605, at:42  #1
-    	    vertical_line  110,230, at:42  #2
     	    vertical_line  485,605, at:360 #1
     	    vertical_line  110,230, at:360 #2
     	    vertical_line  485,605, at:405 #1
@@ -450,16 +457,19 @@ class EnteroPdf < Prawn::Document
             { :text => 'FUNDAMENTACION: ART. 119 DE LA LEY DE HACIENDA PARA EL MUNICIPIO DE LOS CABOS, INCISO C) DISPOCISION FINAL EN LOS RELLENOS MUNICIPALES.',
             size:8, style:[:italic], font:"Calibri", color:'000000' }
         ], at:[25,483], width:481, height:50
-        highlight = HighlightCallback.new(:color => 'ffff00', :document => self)
+        #highlight = HighlightCallback.new(:color => 'ffff00', :document => self)
         formatted_text_box [
-            { :text => '$1,927,756.00', #:callback => highlight,
+            { :text => "#{number_to_currency(@grandTotal)}", #:callback => highlight,
             size:8.5, style:[:italic], font:"Calibri", color:'000000' }
         ], at:[500,483], width:100, height:10
         formatted_text_box [
             { :text => 'FUNDAMENTACION: ART. 119 DE LA LEY DE HACIENDA PARA EL MUNICIPIO DE LOS CABOS, INCISO C) DISPOCISION FINAL EN LOS RELLENOS MUNICIPALES.',
             size:8, style:[:italic], font:"Calibri", color:'000000' }
         ], at:[25,108], width:483, height:50
-        
+        formatted_text_box [
+            { :text => "#{number_to_currency(@grandTotal)}", #:callback => highlight,
+            size:8.5, style:[:italic], font:"Calibri", color:'000000' }
+        ], at:[500,108], width:100, height:10
         # formatted_text_box [
         #     { :text => 'CLAVE:',
         #     size:8.5, style:[:italic], font:"Calibri", color:'000000' }
@@ -543,6 +553,7 @@ class EnteroPdf < Prawn::Document
         @cost = (@quantity*tax).round(2)
         @percent = (@cost*0.3).round(2)
         @total = (@cost + @percent).round(2)
+        @grandTotal = (@grandTotal + @total).round(2)
     end
     
     def setTexts(x,y,message)
