@@ -1,5 +1,5 @@
 $(document).on "turbolinks:load", ->
-    $('.form-inline').submit (e) ->
+    $('form').submit (e) ->
         e.preventDefault()
     $('.srch').click ->
         concesionario = $('#name').val()
@@ -9,10 +9,3 @@ $(document).on "turbolinks:load", ->
             cache: false
             data:
                 name: concesionario
-            # success: (data) ->
-            #     alert data
-            #     return
-            # error: (data) ->
-            #     console.log data
-            #     return
-    

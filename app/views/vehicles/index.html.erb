@@ -1,7 +1,7 @@
 <div class='container'>
   <div class='row'>
     <div class='col-xs col-md-12 be-soft_gray'>
-      <h1>Listado de Vehicles de Concesionarios</h1>      
+      <h1>Lista de Vehiculos de Concesionarios</h1>      
     </div>
   </div>
   <div class='row'>
@@ -21,9 +21,12 @@
               <tr>
                 <td><%= vehicle.concessionary.name %></td>
                 <td><%= vehicle.plate %></td>
-                <td><%= link_to 'Mostrar', vehicle %></td>
-                <td><%= link_to 'Editar', edit_vehicle_path(vehicle) %></td>
-                <td><%= link_to 'Borrar', vehicle, method: :delete, data: { confirm: 'Esta usted seguro?' } %></td>
+                <td><%= link_to vehicle do %> <%= octicon 'eye', class:'rigth' %> <% end %></td>
+                <td><%= link_to edit_vehicle_path(vehicle) do %> <%= octicon 'pencil', class:'rigth' %> <% end %> </td>
+                <td><%= link_to vehicle, method: :delete, data: { confirm: 'Esta usted seguro?' } do %>
+                    <%= octicon 'trashcan', class:'rigth' %>
+                  <% end %>
+                </td>
               </tr>
             <% end %>
           </tbody>
@@ -32,11 +35,14 @@
     </div>
   </div>
   <div class='row'>
-    <div class='col-xs col-md-12 be-soft_gray'>
-      <%= link_to 'Nuevo Vehiculos', new_vehicle_path, class:'btn btn-default btn-lg' %>
-      <%= will_paginate @vehicles %>
+    <div class='col-xs col-md-4'>
+      <br>
+      <%= link_to 'Nuevo Vehiculo', new_vehicle_path, class:'btn btn-default btn-md' %>
+    </div>
+    <div class='col-xs col-md-8'>
+      <%= will_paginate @vehicles, renderer: BootstrapPagination::Rails %>
     </div>
   </div>
 </div
-<br>
+
 

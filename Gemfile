@@ -19,7 +19,8 @@ source 'https://rubygems.org'
  gem 'rails-i18n'
  gem 'puma' #recommendation by heroku
  gem 'pry', group: :development
- 
+ gem 'will_paginate-bootstrap'
+ gem 'octicons_helper'
 #groups
   group :development, :test do
     # Call 'byebug' anywhere in the code to stop execution and get a debugger console
