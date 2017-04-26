@@ -19,7 +19,11 @@ Rails.application.routes.draw do
       end
   end
   
-  resources :concessionaries
+  resources :concessionaries do
+    collection do
+      get 'get_byName', to:'concessionaries#get_byName'
+    end
+  end
   
   resources :vehicles do
       resources :debts, only: [:create, :destroy]

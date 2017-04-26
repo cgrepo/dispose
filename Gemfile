@@ -11,6 +11,7 @@ source 'https://rubygems.org'
  gem 'bcrypt', '~> 3.1.7'
  gem 'will_paginate', '~> 3.0.6'
  gem 'bootstrap-sass', '~> 3.3.6'
+ gem 'bootstrap_form'
  gem 'jquery-turbolinks'
  gem 'responders'
  gem 'jquery-ui-rails'
@@ -22,7 +23,7 @@ source 'https://rubygems.org'
 #groups
   group :development, :test do
     # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-    #gem 'byebug'
+    gem 'byebug'
     # Use sqlite3 as the database for Active Record
    gem 'sqlite3'
    gem 'pdfjs_rails'

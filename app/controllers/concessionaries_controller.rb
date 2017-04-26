@@ -1,6 +1,7 @@
 class ConcessionariesController < ApplicationController
   before_action :set_concessionary, only: [:show, :edit, :update, :destroy]
-
+  protect_from_forgery except: :get_byName
+  
   # GET /concessionaries
   # GET /concessionaries.json
   def index
@@ -60,7 +61,16 @@ class ConcessionariesController < ApplicationController
       format.json { head :no_content }
     end
   end
-
+  
+  def get_byName
+    #byebug
+    @concessionaries = Concessionary.where("name LIKE ?",'%'+params[:name]+'%')
+    
+    respond_to do |format|
+      format.js {}
+    end
+  end
+  
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_concessionary

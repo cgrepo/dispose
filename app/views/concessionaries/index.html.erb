@@ -6,6 +6,17 @@
   </div>
   <div class='row'>
     <div class='col-xs col-md-12'>
+      <%= bootstrap_form_tag id:'search', url: '/search', method:'get', remote:false, layout: :inline do |f| %>
+        <%= f.text_field_with_bootstrap :name, label:'Concesionario' %>
+        <%= submit_tag 'search', class:'btn btn-default btn-md srch' %>
+        <%#= link_to 'BUSCAR', get_byName_concessionaries_path(format:'js'), class:'btn btn-default btn-md srch' %>
+        <%#= button_tag 'buscar2' %>
+      <% end %>
+    </div>
+  </div>
+  <div class='row cube'></div>
+  <div class='row'>
+    <div class='col-xs col-md-12'>
       <div class="table-responsive no-margins">
         <table class="table table-hover table-striped">
         <thead>
