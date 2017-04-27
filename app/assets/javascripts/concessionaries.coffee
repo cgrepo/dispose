@@ -1,5 +1,5 @@
 $(document).on "turbolinks:load", ->
-    $('form').submit (e) ->
+    $('#search').submit (e) ->
         e.preventDefault()
     $('.srch').click ->
         concesionario = $('#name').val()
