@@ -20,8 +20,8 @@ class EnteroPdf < Prawn::Document
         super()
         
         @enteros = enteros
-        #@UMA = 75.49
-        @UMA = 104.78
+        @UMA = 75.49
+        #@UMA = 104.78
         @folio = Time.now.strftime("%d%m%Y-%j-#{Concessionary.find_by(name:@enteros.first.taxpayer).id}")
         @grandTotal = 0
         @quantity = 0
