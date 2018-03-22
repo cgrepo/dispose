@@ -98,7 +98,7 @@ GEM
       rails
     pdf-core (0.7.0)
     pdfjs_rails (0.0.1)
-    pg (1.0.0)
+    pg (0.20.0)
     prawn (2.2.2)
       pdf-core (~> 0.7.0)
       ttfunk (~> 1.5)
@@ -208,7 +208,7 @@ DEPENDENCIES
   jquery-ui-rails
   octicons_helper
   pdfjs_rails
-  pg
+  pg (~> 0.18)
   prawn
   pry
   puma

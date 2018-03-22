@@ -39,7 +39,8 @@ source 'https://rubygems.org'
   end
   
   group :production do
-   gem 'pg'
+   #gem 'pg' old line
+   gem "pg", "~> 0.18"
    gem 'rails_12factor'
   end
 
