@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170224181418) do
+ActiveRecord::Schema.define(version: 20180322182045) do
 
   create_table "concessionaries", force: :cascade do |t|
     t.string   "name"
@@ -39,6 +39,7 @@ ActiveRecord::Schema.define(version: 20170224181418) do
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
     t.integer  "concessionary_id"
+    t.string   "folio"
   end
 
   add_index "enteros", ["concessionary_id"], name: "index_enteros_on_concessionary_id"

@@ -16,42 +16,50 @@
           <thead>
             <tr>
               <th>NOMBRE</th>
-              <th>SERVICIO</th>
+            <!--  <th>SERVICIO</th>
               <th>UNIDAD</th>
-              <th>CANTIDAD</th>
+              <th>CANTIDAD</th> -->
+              <th>FECHA ULTIMO REGISTRO</th>
+              <th>FOLIO ENTERO</th>
             <!--  <th>COSTO</th>
               <th>30% ADICIONAL</th>
               <th>TOTAL</th> -->
-              <th colspan="3"></th>
+              <th colspan="1"></th>
             </tr>
           </thead>
           <tbody>
             <% @enteros.each do |entero| %>
-              <% case entero.service %>
-              <% when '1' %>
-              <% servicio = 'RESIDUOS SOLIDOS COMERCIAL' %>
-              <% when '2' %>
-              <% servicio = 'ESCOMBROS DE CONSTRUCCION COMERCIAL' %>
-              <% when '3' %>
-              <% servicio = 'RESTOS DE ANIMALES COMERCIAL' %>
-              <% when '4' %>
-              <% servicio = 'RAMAS Y DESECHOS DE JARDINERIA COMERCIAL' %>
-              <% when '5' %>
-              <% servicio = 'LLANTAS DE VEHICULOS AUTOMORES COMERCIAL' %>
-              <% when '6' %>
-              <% servicio = 'LODO ESTABILIZADOS DERIVADO DE PLANTAS DE TRATAMIENTO' %>
-              <% end %>
+              <%# case entero.service %>
+              <%# when '1' %>
+              <%# servicio = 'RESIDUOS SOLIDOS COMERCIAL' %>
+              <%# when '2' %>
+              <%# servicio = 'ESCOMBROS DE CONSTRUCCION COMERCIAL' %>
+              <%# when '3' %>
+              <%# servicio = 'RESTOS DE ANIMALES COMERCIAL' %>
+              <%# when '4' %>
+              <%# servicio = 'RAMAS Y DESECHOS DE JARDINERIA COMERCIAL' %>
+              <%# when '5' %>
+              <%# servicio = 'LLANTAS DE VEHICULOS AUTOMORES COMERCIAL' %>
+              <%# when '6' %>
+              <%# servicio = 'LODO ESTABILIZADOS DERIVADO DE PLANTAS DE TRATAMIENTO' %>
+              <%# end %>
               <tr>
                 <td><%= entero.taxpayer %></td>
-                <td><%= servicio %></td>
-                <td><%= entero.unit %></td>
-                <td><%= entero.quantity %></td>
+              <!--  <td><%#= servicio %></td>
+                <td><%#= entero.unit %></td>
+                <td><%#= entero.quantity %></td> -->
+                <td>
+                  <%= entero.created_at %>
+                  <%#= entero.created_at.strftime("%d/%m/%Y") %>
+                  </td>
+                  <td><%= entero.folio %></td>
                 <td><%= link_to 'Mostrar', entero, class:'btn btn-default btn-xs' %></td>
-                <td><%= link_to 'Editar', edit_entero_path(entero), class:'btn btn-default btn-xs' %></td>
-                <td><%= link_to 'Borrar', entero, method: :delete, data: { confirm: 'Esta usted seguro?' }, class:'btn btn-default btn-xs' %></td>
+               <!-- <td><%#= link_to 'Editar', edit_entero_path(entero), class:'btn btn-default btn-xs' %></td>
+                <td><%#= link_to 'Borrar', entero, method: :delete, data: { confirm: 'Esta usted seguro?' }, class:'btn btn-default btn-xs' %></td>
+                -->
               </tr>
             <% end %>
-  </tbody>
+          </tbody>
         </table>
       </div>
     </div>

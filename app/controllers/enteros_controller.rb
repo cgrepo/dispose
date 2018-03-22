@@ -4,7 +4,18 @@ class EnterosController < ApplicationController
   # GET /enteros
   # GET /enteros.json
   def index
-    @enteros = Entero.all.order(:id).paginate(page: params[:page], per_page:20)
+    #@enteros = Entero.all.order(:id).paginate(page: params[:page], per_page:20)
+    #@enteros = Entero.all.order(:created_at).order(:concessionary_id).paginate(page: params[:page], per_page:20)
+    #@enteros = Entero.all.order(:concessionary_id).group(:created_at).paginate(page: params[:page], per_page:20)
+    #@enteros = Entero.all.order(:created_at).order(:concessionary_id).group(:concessionary_id).paginate(page: params[:page], per_page:20)
+    #@enteros = Entero.all.order(:concessionary_id).group(:created_at).paginate(page: params[:page], per_page:20)
+    #@enteros = Entero.all.group(:created_at).group(:concessionary_id).paginate(page: params[:page], per_page:20)
+    #@enteros = Entero.all.group(:concessionary_id).group(:created_at).paginate(page: params[:page], per_page:20)
+    #@enteros = Entero.all.group(:concessionary_id,:created_at).order(created_at: :desc).paginate(page: params[:page], per_page:20)
+    ###@enteros = Entero.all.group(:created_at).order(:concessionary_id).group(:concessionary_id).paginate(page: params[:page], per_page:20)
+    # @enteros = Entero.where(concessionary_id:@e.concessionary).where("created_at LIKE '%2017-04-07 %'").group(:created_at).paginate(page: params[:page], per_page:20)
+    #@enteros = Entero.all.group(:taxpayer, :created_at).order(created_at: :desc).paginate(page: params[:page], per_page:20)
+    @enteros = Entero.all.group(:taxpayer).order(created_at: :desc).paginate(page: params[:page], per_page:20)
   end
 
   # GET /enteros/1

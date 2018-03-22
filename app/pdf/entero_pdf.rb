@@ -23,6 +23,7 @@ class EnteroPdf < Prawn::Document
         #@UMA = 75.49
         @UMA = 80.60
         @folio = Time.now.strftime("%d%m%Y-%j-#{Concessionary.find_by(name:@enteros.first.taxpayer).id}")
+        @enteros.each { |e|  e.update(:folio => @folio)  }
         @grandTotal = 0
         @quantity = 0
         @cost = 0
@@ -30,12 +31,14 @@ class EnteroPdf < Prawn::Document
         @total = 0
         setUp
         setQuantities(@enteros,@UMA)
+        
         setFoot
     end
 #------PRIVATE METHODS--------------------------------------------------------------------------------------------------------------------
     private
 #------SETUP------------------------------------------------------------------------------------------------------------------------------
     def setUp
+        
 		font_families["Verdana"] = { normal:{file:"#{Rails.root.to_s}/app/assets/fonts/Verdana.ttf", font:"Verdana"} }
 		font_families["Calibri"] = { normal:{file:"#{Rails.root.to_s}/app/assets/fonts/Calibri.ttf", font:"Calibri"} }
         #stroke_axis(step_length:20)
