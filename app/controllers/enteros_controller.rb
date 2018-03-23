@@ -21,15 +21,18 @@ class EnterosController < ApplicationController
   # GET /enteros/1
   # GET /enteros/1.json
   def show
-    @enteros = Entero.where("folio LIKE ?","%#{@entero.folio}%")
     respond_to do |format|
-      format.html 
-      format.pdf do
-        pdf = EnteroPdf.new(@enteros)
-        send_data pdf.render,
-          filename: "entero_relleno.pdf",
-          type: 'application/pdf',
-          disposition: 'inline'
+      if @entero.folio
+        @enteros = Entero.where("folio LIKE ?","%#{@entero.folio}%")
+        format.pdf do
+          pdf = EnteroPdf.new(@enteros)
+          send_data pdf.render,
+            filename: "entero_relleno.pdf",
+            type: 'application/pdf',
+            disposition: 'inline'
+        end
+      else
+        format.html
       end
     end
   end
