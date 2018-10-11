@@ -493,7 +493,7 @@ class EnteroPdf < Prawn::Document
         ], at:[318,80], width:220, height:10
         
         formatted_text_box [
-            { :text => 'Lic. Sheila R. Peralta Zumaya',
+            { :text => 'C. Sandra Erandine Díaz Solis',
             size:13, style:[:bold], font:"Calibri", color:'000000' }
         ], at:[65,405], width:200, height:15
         formatted_text_box [
