@@ -1,24 +1,10 @@
-# class HighlightCallback
-#   def initialize(options)
-#     @color    = options[:color]
-#     @document = options[:document]
-#   end
-#   def render_behind(fragment)
-#     original_color       = @document.fill_color
-#     @document.fill_color = @color
-#     @document.fill_rectangle(fragment.top_left, fragment.width, fragment.height)
-#     @document.fill_color = original_color
-#   end
-# end
-#require 'action_view'
-#include ActionView::Helpers::NumberHelper
 require 'active_support'
 
 class EnteroPdf < Prawn::Document
     include ActiveSupport::NumberHelper
     def initialize(enteros)
         super()
-        
+        @responsible='C. Sandra Erandine Díaz Solis'        
         @enteros = enteros
         #@UMA = 75.49
         @UMA = 80.60
@@ -402,11 +388,11 @@ class EnteroPdf < Prawn::Document
 #------SHAPES-----------------------------------------------------------------------------------------------------------------------------
     def setShapes
         imgshield = "#{Rails.root.to_s}/app/assets/images/shield.png"
-		imglogo = "#{Rails.root.to_s}/app/assets/images/logo.png"
+		#imglogo = "#{Rails.root.to_s}/app/assets/images/logo.png"
         image imgshield, at: [26,710], fit:[80,80]
         image imgshield, at: [26,335], fit:[80,80]
-		image imglogo, at: [400,700], fit:[150,150]
-		image imglogo, at: [400,335], fit:[150,150]
+		#image imglogo, at: [400,700], fit:[150,150]
+		#image imglogo, at: [400,335], fit:[150,150]
 		stroke_color '000000'
     	
     	stroke do
@@ -493,7 +479,7 @@ class EnteroPdf < Prawn::Document
         ], at:[318,80], width:220, height:10
         
         formatted_text_box [
-            { :text => 'C. Sandra Erandine Díaz Solis',
+            { :text => @responsible,
             size:13, style:[:bold], font:"Calibri", color:'000000' }
         ], at:[65,405], width:200, height:15
         formatted_text_box [
@@ -501,7 +487,7 @@ class EnteroPdf < Prawn::Document
             size:11, style:[:bold], font:"Calibri", color:'000000' }
         ], at:[62,392], width:200, height:15
         formatted_text_box [
-            { :text => 'Lic. Sheila R. Peralta Zumaya',
+            { :text => @responsible,
             size:13, style:[:bold], font:"Calibri", color:'000000' }
         ], at:[65,30], width:200, height:15
         formatted_text_box [
