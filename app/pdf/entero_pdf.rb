@@ -342,11 +342,11 @@ class EnteroPdf < Prawn::Document
 #------HEADERS----------------------------------------------------------------------------------------------------------------------------
     def setHeaders
         formatted_text_box [
-    	    { :text => "H. XII AYUNTAMIENTO DE LOS CABOS DIRECCÍON MUNICIPAL DE INGRESOS", size:13, style:[:bold], font:"Verdana", 
+    	    { :text => "H. XIII AYUNTAMIENTO DE LOS CABOS DIRECCÍON MUNICIPAL DE INGRESOS", size:13, style:[:bold], font:"Verdana", 
     	      color:'000000'}, 
     	], at:[120,710], width:320, height:200
     	formatted_text_box [
-    	    { :text => "H. XII AYUNTAMIENTO DE LOS CABOS DIRECCÍON MUNICIPAL DE INGRESOS", size:13, style:[:bold], font:"Verdana", 
+    	    { :text => "H. XIII AYUNTAMIENTO DE LOS CABOS DIRECCÍON MUNICIPAL DE INGRESOS", size:13, style:[:bold], font:"Verdana", 
     	      color:'000000'}, 
     	], at:[120,335], width:320, height:200
     	
