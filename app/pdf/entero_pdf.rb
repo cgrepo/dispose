@@ -7,7 +7,8 @@ class EnteroPdf < Prawn::Document
         @responsible='C. Sandra Erandine Díaz Solis'        
         @enteros = enteros
         #@UMA = 75.49
-        @UMA = 80.60
+        #@UMA = 80.60
+        @UMA = 109.83
         @folio = Time.now.strftime("%d%m%Y-%j-#{Concessionary.find_by(name:@enteros.first.taxpayer).id}")
         @enteros.each { |e|  e.update(:folio => @folio)  }
         @grandTotal = 0
