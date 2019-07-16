@@ -2,14 +2,19 @@ require 'active_support'
 
 class EnteroPdf < Prawn::Document
     include ActiveSupport::NumberHelper
-    def initialize(enteros)
+    def initialize(enteros,folio)
         super()
         @responsible='C. Sandra Erandine Díaz Solis'        
         @enteros = enteros
         #@UMA = 75.49
         #@UMA = 80.60
         @UMA = 84.49
-        @folio = Time.now.strftime("%d%m%Y-%j-#{Concessionary.find_by(name:@enteros.first.taxpayer).id}")
+        #@folio = Time.now.strftime("%d%m%Y-%j-#{Concessionary.find_by(name:@enteros.first.taxpayer).id}")
+        @folio = folio
+        #byebug
+        #unless savenewFolio
+        #    return 
+        #end
         @enteros.each { |e|  e.update(:folio => @folio)  }
         @grandTotal = 0
         @quantity = 0
@@ -571,5 +576,16 @@ class EnteroPdf < Prawn::Document
                 { :text => "TONELADA", size:9, style:[:normal], font:"Calibri", color:'000000' }
             ], at:[317,rows[1]], width:45, height:10
         end
+    end
+    
+    def savenewFolio
+        unless Folio.find_by :consecutive => @folio
+            f = Folio.new
+            f.consecutive = @folio
+            return true if f.save
+        else
+            return false
+        end
+        
     end
 end

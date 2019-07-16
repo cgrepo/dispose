@@ -24,6 +24,11 @@
         <%= f.label :CANTIDAD %><br>
         <%= f.text_field :quantity, class:'form-control cantidad' %>
       </div>
+      <div class="col-xs-2 col-md-3" align='center'>
+        <h2>FOLIO: <%= @folio %></h2>
+        <%= hidden_field_tag 'token', @token %>
+        <%= hidden_field_tag 'f', @folio %>
+      </div>
     </div>
     <div class="row">
       <div class="col-xs-10 col-md-7">

@@ -43,12 +43,3 @@ source 'https://rubygems.org'
    gem "pg", "~> 0.18"
    gem 'rails_12factor'
   end
-
-# others
-  # Use Unicorn as the app server
-  # gem 'unicorn'
-  
-  # Use Capistrano for deployment
-  # gem 'capistrano-rails', group: :development
-  # See https://github.com/rails/execjs#readme for more supported runtimes
-  # gem 'therubyracer', platforms: :ruby

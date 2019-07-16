@@ -6,8 +6,8 @@ $rows.each(
     var $col = $(this).find('td');
     enteros.push($col.eq(0).text());
   });
-
-var url = '/enteros/showEntero?totals=' + enteros;
+console.log();
+var url = '/enteros/showEntero?totals=' + enteros + '&tocken=' + $('input#token').val() +'&f=' + $('input#f').val();
 
 $('#myIframe').attr("src", url);
 $('.tag').show();

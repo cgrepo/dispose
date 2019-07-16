@@ -25,7 +25,7 @@ class EnterosController < ApplicationController
       if @entero.folio
         @enteros = Entero.where("folio LIKE ?","%#{@entero.folio}%")
         format.pdf do
-          pdf = EnteroPdf.new(@enteros)
+          pdf = EnteroPdf.new(@enteros,@enteros.first.folio)
           send_data pdf.render,
             filename: "entero_relleno.pdf",
             type: 'application/pdf',
@@ -40,6 +40,12 @@ class EnterosController < ApplicationController
   # GET /enteros/new
   def new
     @entero = Entero.new
+    if Entero.last
+      @folio = (Entero.last.folio.to_i+1).to_s.rjust(4,'0')
+      elsif Folio.last
+        @folio = (Folio.last.consecutive.to_i+1).to_s.rjust(4,'0')
+    end
+    @token = buildMAC(@folio)
   end
 
   # GET /enteros/1/edit
@@ -127,17 +133,21 @@ class EnterosController < ApplicationController
   
   def showEntero
     @enteros = Entero.where id: params[:totals].split(',')
-    
     respond_to do |format|
-      format.html do
-        
-        pdf = EnteroPdf.new(@enteros)
-        send_data pdf.render,
-          filename: "entero_relleno.pdf",
-          type: 'application/pdf',
-          disposition: 'inline'
-        end
+      if params[:tocken] == buildMAC(params[:f])
+        format.html do
+          
+          pdf = EnteroPdf.new(@enteros,params[:f])
+          send_data pdf.render,
+            filename: "entero_relleno.pdf",
+            type: 'application/pdf',
+            disposition: 'inline'
+          end
+      else
+        format.html {render plain: 'ISSUE'}
+      end
     end
+    
   end
   
   private
@@ -152,5 +162,11 @@ class EnterosController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def entero_params
       params.require(:entero).permit(:taxpayer, :service, :unit, :quantity)
+    end
+    
+    def buildMAC(data)
+      key = '65043d9d7c067285df44ac43eee30e35e1c2cf3eee352b338c6aabccbbdcaca9'
+      digest = OpenSSL::Digest.new('sha256')
+      OpenSSL::HMAC.hexdigest(digest, key, data)
     end
 end
