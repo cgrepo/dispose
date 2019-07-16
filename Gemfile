@@ -11,7 +11,7 @@ source 'https://rubygems.org'
  gem 'sdoc', '~> 0.4.0', group: :doc
  gem 'bcrypt', '~> 3.1.7'
  gem 'will_paginate', '~> 3.0.6'
- gem 'bootstrap-sass', '~> 3.3.6'
+ gem "bootstrap-sass", ">= 3.4.1" # gem 'bootstrap-sass', '~> 3.3.6' <--- this one has know vul git suggest change!
  gem 'bootstrap_form'
  gem 'jquery-turbolinks'
  gem 'responders'
