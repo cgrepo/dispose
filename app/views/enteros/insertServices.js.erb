@@ -1,5 +1,7 @@
 var concessionary = $('#taxpayer').val();
 var serviceID = $('.services option:selected').val();
+var folio = $('#f').val();
+var token = $('#token').val();
 //var uma = 75.49;
 //var uma = 80.60;
 var uma = 84.49;
@@ -49,11 +51,11 @@ if(serviceID != '')
                 ,url:'/enteros/putService'
                 ,dataType:'json'
                 ,cache: false
-                ,data: { entero: { taxpayer: concessionary, service: serviceID, unit: units, quantity: quantities } }
+                ,data: { entero: { taxpayer: concessionary, service: serviceID, unit: units, quantity: quantities, token:token, folio:folio } }
                 ,success: function(data){
                     $('.display').find('tbody:last').append('<tr><td>'+data.id+'</td><td>'+serviceID+'</td><td>'+payment+'</td><td>'+percent+'</td><td>'+total+'</td></tr>');
                     $('.btnrm').show();
-                    $('#taxpayer').prop('disabled',true);
+                    //$('#taxpayer').prop('disabled',true);
                     $('.services option[value="'+serviceID+'"]').attr('disabled','disabled');
                 }
                 ,error:function(data) { console.log(data); }

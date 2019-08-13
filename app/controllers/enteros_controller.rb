@@ -99,13 +99,15 @@ class EnterosController < ApplicationController
   end
   
   def putService
-    @entero = Entero.new(entero_params)
-    @entero.concessionary = set_concessionary
-    
-    respond_to do |format|
-      if @entero.save
-        format.json { render :show, status: :created, location: @entero }
-        format.js
+    if valid_folio?(params[:entero][:token],params[:entero][:folio])
+      @entero = Entero.new(entero_params)
+      @entero.concessionary = set_concessionary
+      
+      respond_to do |format|
+        if @entero.save
+          format.json { render :show, status: :created, location: @entero }
+          format.js
+        end
       end
     end
   end
@@ -161,12 +163,21 @@ class EnterosController < ApplicationController
     end
     # Never trust parameters from the scary internet, only allow the white list through.
     def entero_params
-      params.require(:entero).permit(:taxpayer, :service, :unit, :quantity)
+      params.require(:entero).permit(:taxpayer, :service, :unit, :quantity, :folio)
     end
     
     def buildMAC(data)
       key = '65043d9d7c067285df44ac43eee30e35e1c2cf3eee352b338c6aabccbbdcaca9'
       digest = OpenSSL::Digest.new('sha256')
       OpenSSL::HMAC.hexdigest(digest, key, data)
+    end
+    
+    def valid_folio?(token,folio)
+      byebug
+      if buildMAC(folio) == token
+        return true
+      else
+        return  false
+      end
     end
 end
