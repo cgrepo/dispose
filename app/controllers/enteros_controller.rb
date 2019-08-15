@@ -173,7 +173,6 @@ class EnterosController < ApplicationController
     end
     
     def valid_folio?(token,folio)
-      byebug
       if buildMAC(folio) == token
         return true
       else
